@@ -8,10 +8,12 @@
     android:background="@color/primary_color"
     >
 
+
+
   <com.cunoraz.gifview.library.GifView
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      app:gif="@drawable/yellow_clock"
+      app:gif="@drawable/black_clock"
       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
