@@ -9,37 +9,66 @@
     <FrameLayout
         android:id="@+id/timeContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        >
+        android:layout_height="@dimen/_400sdp"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:src="@drawable/temp2"
-            />
+            android:src="@drawable/temp2" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:id="@+id/tempView"
+            android:background="@color/black" />
+
 
     </FrameLayout>
 
     <LinearLayout
+
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primary_color"
         android:orientation="vertical"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="@dimen/_290sdp"
+        app:behavior_peekHeight="@dimen/_340sdp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-        <TextView
+
+
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="erwera"
-            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/_1sdp"
+            android:background="@android:color/white"
+            android:elevation="@dimen/_1sdp"
+            android:backgroundTint="@color/white"
+            android:fitsSystemWindows="false"
+            android:layout_margin="0dp"
+            app:elevation="@dimen/_1sdp">
 
-            />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                app:title="Momentix"
+                android:background="@color/white"
+                app:titleTextColor="@color/black"
+                app:layout_scrollFlags="enterAlways">
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
 
     </LinearLayout>
