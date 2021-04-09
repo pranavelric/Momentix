@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.splash.SplashFragment"
     android:background="@color/primary_color"
-    >
+    tools:context=".ui.splash.SplashFragment">
 
 
-
-  <com.cunoraz.gifview.library.GifView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:gif="@drawable/black_clock"
-      />
+    <com.cunoraz.gifview.library.GifView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleX="2"
+        android:scaleY="2"
+        app:gif="@drawable/yellow_clock" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
