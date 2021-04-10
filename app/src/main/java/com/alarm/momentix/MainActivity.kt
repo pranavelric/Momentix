@@ -8,6 +8,7 @@ import androidx.navigation.ui.NavigationUI
 import com.alarm.momentix.databinding.ActivityMainBinding
 import com.alarm.momentix.utils.setFullScreen
 import com.alarm.momentix.utils.setFullScreenForNotch
+import com.alarm.momentix.utils.setFullScreenWithBtmNav
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        setFullScreen()
+        setFullScreenWithBtmNav()
         setFullScreenForNotch()
 
     }

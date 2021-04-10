@@ -2,18 +2,18 @@ package com.alarm.momentix.ui.main
 
 import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.alarm.momentix.MainActivity
+import com.alarm.momentix.R
 import com.alarm.momentix.databinding.FragmentMainBinding
-import com.alarm.momentix.utils.setFullScreenWithBtmNav
+import com.alarm.momentix.utils.getStatusBarHeight
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MainFragment : Fragment() {
 
-    private lateinit var bottomSheet: View
     private lateinit var binding: FragmentMainBinding
 
     override fun onCreateView(
@@ -24,54 +24,78 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater)
 
 
+         binding.toolbar.setOnMenuItemClickListener {
+            onOptionsItemSelected(it)
+        }
+
+        setHasOptionsMenu(true)
 //        bottom sheet sliding set
         val behavior = BottomSheetBehavior.from(binding.bottomSheet)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 
-            behavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                 override fun onStateChanged(bottomSheet: View, newState: Int) {
-
                     if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                         binding.bottomSheet.setPadding(0, 0, 0, 0)
 
                     } else if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                        bottomSheet.setPadding(0, 120, 0, 0)
+                        activity?.getStatusBarHeight()?.let { bottomSheet.setPadding(0, it, 0, 0) }
 
                     }
-
-
                 }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
-                    binding.tempView.alpha = (slideOffset)
-                    if(slideOffset<0.5F){
-                        binding.tempView.alpha= 0.5F
+                    if (slideOffset < 0.5F) {
+                        binding.tempView.alpha = 0.5F
+                    } else {
+                        binding.tempView.alpha = (slideOffset)
                     }
 
-                    bottomSheet.setPadding(0, (slideOffset * 120).toInt(), 0, 0)
+                    bottomSheet.setPadding(
+                        0,
+                        (slideOffset * activity?.getStatusBarHeight()!!).toInt(),
+                        0,
+                        0
+                    )
 
 
                 }
 
             })
 
-
         }
-
-
-
-
-
         return binding.root
-    }
 
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.setFullScreenWithBtmNav()
-
-
     }
 
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        menu.clear();
+//        inflater.inflate(R.menu.home_menu, menu);
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when (item.itemId) {
+            R.id.action_setting -> {
+                findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
+                return true
+            }
+            else -> {
+                return false
+            }
+
+        }
+
+        //   return false
+    }
+
+
 }
+
+

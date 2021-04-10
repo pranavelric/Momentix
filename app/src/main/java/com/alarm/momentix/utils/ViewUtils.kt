@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -85,4 +86,11 @@ fun Activity.setFullScreenForNotch() {
             WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
     }
 
+}
+
+
+fun Activity.getStatusBarHeight(): Int {
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    return if (resourceId > 0) resources.getDimensionPixelSize(resourceId)
+    else Rect().apply { window.decorView.getWindowVisibleDisplayFrame(this) }.top
 }
