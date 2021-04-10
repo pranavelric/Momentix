@@ -17,9 +17,7 @@ import com.alarm.momentix.utils.share
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MainFragment : Fragment() {
-
     private lateinit var binding: FragmentMainBinding
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -76,7 +74,6 @@ class MainFragment : Fragment() {
 
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -94,21 +91,15 @@ class MainFragment : Fragment() {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                     (activity as MainActivity).mySharedPrefrences.setNightModeEnabled(false)
                 }
-
-
-
                 return true
-
             }
             R.id.action_share -> {
                 activity?.share("Playstore link", "text")
                 return true
-
             }
             else -> {
                 return false
             }
-
         }
     }
 
