@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.content.Context
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "alarm_table")
 data class Alarm(
@@ -24,11 +25,8 @@ data class Alarm(
     val tone: String,
     val vibrate: String,
 
-    ) {
+    ) : Serializable {
     fun schedule(context: Context) {
-
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-
-
     }
 }
