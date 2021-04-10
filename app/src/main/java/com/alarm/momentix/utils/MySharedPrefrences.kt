@@ -35,11 +35,9 @@ class MySharedPrefrences @Inject constructor(@ApplicationContext context: Contex
     fun setTheme(id:Int){
         editor.putInt(APP_THEME,id)
         editor.commit()
-
     }
     fun getAppTheme():Int{
         return sp.getInt(APP_THEME, R.style.Theme_Momentix)
-
     }
 
 

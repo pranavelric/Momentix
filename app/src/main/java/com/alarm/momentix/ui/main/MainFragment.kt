@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.alarm.momentix.MainActivity
 import com.alarm.momentix.R
 import com.alarm.momentix.databinding.FragmentMainBinding
 import com.alarm.momentix.utils.getStatusBarHeight
+import com.alarm.momentix.utils.share
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MainFragment : Fragment() {
@@ -30,6 +32,12 @@ class MainFragment : Fragment() {
             onOptionsItemSelected(it)
         }
         setHasOptionsMenu(true)
+        setSlidingBehaviour()
+        return binding.root
+
+    }
+
+    private fun setSlidingBehaviour() {
         val behavior = BottomSheetBehavior.from(binding.bottomSheet)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 
@@ -65,12 +73,7 @@ class MainFragment : Fragment() {
             })
 
         }
-        return binding.root
 
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
 
@@ -84,15 +87,21 @@ class MainFragment : Fragment() {
             R.id.action_rate -> {
 
 
-               AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                if (!(activity as MainActivity).mySharedPrefrences.getIsNightModeEnabled()) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    (activity as MainActivity).mySharedPrefrences.setNightModeEnabled(true)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    (activity as MainActivity).mySharedPrefrences.setNightModeEnabled(false)
+                }
+
+
 
                 return true
 
             }
             R.id.action_share -> {
-//                activity?.share("Playstore link", "text")
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
+                activity?.share("Playstore link", "text")
                 return true
 
             }
