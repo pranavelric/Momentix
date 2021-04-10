@@ -26,6 +26,17 @@
             android:id="@+id/tempView"
             android:background="@color/black" />
 
+        <TextClock
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:format12Hour="hh:mm:ss a"
+            android:gravity="center_horizontal"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            />
+
 
     </FrameLayout>
 
