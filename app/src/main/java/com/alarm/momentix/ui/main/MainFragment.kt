@@ -24,11 +24,10 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMainBinding.inflate(inflater)
-
-
         binding.toolbar.setOnMenuItemClickListener {
             onOptionsItemSelected(it)
         }
+
         setHasOptionsMenu(true)
         setSlidingBehaviour()
         return binding.root
