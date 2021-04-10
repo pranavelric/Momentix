@@ -67,14 +67,12 @@ fun Context.share(link: String?, type: String) {
     val shareIntent = Intent()
     shareIntent.action = Intent.ACTION_SEND
 
+    shareIntent.type="text/plain"
     shareIntent.putExtra(
         Intent.EXTRA_TEXT,
         "Platstore link will be inserted here"
     )
-    shareIntent.putExtra(
-        Intent.EXTRA_STREAM,
-        Uri.parse(link)
-    )
+
     this.startActivity(Intent.createChooser(shareIntent, "Share to"))
 }
 

@@ -2,14 +2,16 @@ package com.alarm.momentix.ui.main
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.alarm.momentix.MainActivity
 import com.alarm.momentix.R
 import com.alarm.momentix.databinding.FragmentMainBinding
 import com.alarm.momentix.utils.getStatusBarHeight
+import com.alarm.momentix.utils.share
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class MainFragment : Fragment() {
@@ -24,12 +26,10 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(inflater)
 
 
-         binding.toolbar.setOnMenuItemClickListener {
+        binding.toolbar.setOnMenuItemClickListener {
             onOptionsItemSelected(it)
         }
-
         setHasOptionsMenu(true)
-//        bottom sheet sliding set
         val behavior = BottomSheetBehavior.from(binding.bottomSheet)
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT) {
 
@@ -73,11 +73,6 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        menu.clear();
-//        inflater.inflate(R.menu.home_menu, menu);
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -86,13 +81,20 @@ class MainFragment : Fragment() {
                 findNavController().navigate(R.id.action_mainFragment_to_settingsFragment)
                 return true
             }
+            R.id.action_rate -> {
+                return true
+
+            }
+            R.id.action_share -> {
+                activity?.share("Playstore link", "text")
+            return true
+
+            }
             else -> {
                 return false
             }
 
         }
-
-        //   return false
     }
 
 

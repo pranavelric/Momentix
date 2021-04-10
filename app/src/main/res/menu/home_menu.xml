@@ -4,6 +4,14 @@
 
     <item android:title="Settings"
         android:id="@+id/action_setting"
-
         />
+
+    <item android:title="Rate us"
+        android:id="@+id/action_rate"
+        />
+
+    <item android:title="Share"
+        android:id="@+id/action_share"
+        />
+
 </menu>
