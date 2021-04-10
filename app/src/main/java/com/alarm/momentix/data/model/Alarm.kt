@@ -79,5 +79,12 @@ data class Alarm(
 
     fun cancelAlarm(context: Context) {
 
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val intent = Intent(context, AlarmBroadCastReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0)
+       alarmManager.cancel(pendingIntent)
+       this.started=false
+       context.toast("Alarm cancelded for ${hour}::${minute}")
+
     }
 }
