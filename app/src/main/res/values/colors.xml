@@ -9,4 +9,17 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#040b14</color>
 
+
+
+<!-- amoled-->
+    <color name="primary_color_amoled">#000000</color>
+    <color name="primary_color_amoled_variant">#000000</color>
+    <color name="colorOnPrimary_amoled">#FFFFFF</color>
+    <color name="secondary_amoled">#F8D01F</color>
+    <color name="colorSecondaryVariant_amoled">#AA8F16</color>
+    <color name="colorOnSecondary_amoled">#000000</color>
+
+
+
+
 </resources>

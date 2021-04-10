@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Amoled.Momentix" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_color_amoled</item>
+        <item name="colorPrimaryVariant">@color/primary_color_amoled_variant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary_amoled</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondary_amoled</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant_amoled</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary_amoled</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+
+
+
+</resources>
