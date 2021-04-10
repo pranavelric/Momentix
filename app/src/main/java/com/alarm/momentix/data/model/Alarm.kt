@@ -76,4 +76,8 @@ data class Alarm(
         this.started = true
 
     }
+
+    fun cancelAlarm(context: Context) {
+
+    }
 }
