@@ -7,6 +7,6 @@ import android.content.Intent
 class AlarmBroadCastReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        
+
     }
 }
