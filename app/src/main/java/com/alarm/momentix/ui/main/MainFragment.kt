@@ -69,15 +69,18 @@ class MainFragment : Fragment() {
 
     private fun setClickListeners() {
 
-         alarmRcAdapter.setOnAlarmCancelClickListener { alarm, isChecked ->
+        alarmRcAdapter.setOnAlarmCancelClickListener { alarm, isChecked ->
             val canceledAlarm = alarm
             canceledAlarm.started = false
             mainFragViewModel.update(canceledAlarm)
             context?.let { alarm.cancelAlarm(it) }
-             
+
         }
-        alarmRcAdapter.setAlarmDeleteClickListener { alarm->
+        alarmRcAdapter.setAlarmDeleteClickListener { alarm, position ->
             mainFragViewModel.deleteAlarm(alarm.alarmId)
+            alarmRcAdapter.notifyItemRemoved(position)
+            alarmRcAdapter.notifyItemRangeChanged(position, alarmRcAdapter.itemCount)
+            mainFragViewModel._alarmList.value?.removeAt(position)
         }
 
 

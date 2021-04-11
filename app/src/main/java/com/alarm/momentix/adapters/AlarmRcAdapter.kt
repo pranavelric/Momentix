@@ -1,6 +1,5 @@
 package com.alarm.momentix.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -18,7 +17,7 @@ class AlarmRcAdapter() :
     inner class MyAlarmViewHolder(private val binding: ItemAlarmBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(alarm: Alarm) {
+        fun bind(alarm: Alarm, position: Int) {
             binding.setVariable(BR.myAlarm, alarm)
             binding.executePendingBindings()
             binding.itemAlarmTime.text = TimePickerUtil.getFormattedTime(alarm.hour, alarm.minute)
@@ -29,7 +28,7 @@ class AlarmRcAdapter() :
             }
             binding.itemAlarmRecurringDelete.setOnClickListener {
                 onAlarmDeleteClickListener?.let { click ->
-                    click(alarm)
+                    click(alarm,position)
                 }
             }
 
@@ -63,7 +62,7 @@ class AlarmRcAdapter() :
     }
 
     override fun onBindViewHolder(holder: MyAlarmViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position),position)
     }
 
     override fun getItemCount(): Int {
@@ -85,8 +84,8 @@ class AlarmRcAdapter() :
         onAlarmCancelClickListener = listener
     }
 
-    private var onAlarmDeleteClickListener: ((Alarm) -> Unit)? = null
-    fun setAlarmDeleteClickListener(listener: (Alarm) -> Unit) {
+    private var onAlarmDeleteClickListener: ((Alarm,Int) -> Unit)? = null
+    fun setAlarmDeleteClickListener(listener: (Alarm,Int) -> Unit) {
         onAlarmDeleteClickListener = listener
     }
 

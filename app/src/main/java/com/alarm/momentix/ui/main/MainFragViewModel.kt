@@ -17,13 +17,15 @@ import javax.inject.Inject
 class MainFragViewModel @ViewModelInject constructor(private val repository: AlarmRepository) :
     ViewModel() {
 
-    private var _alarmList = MutableLiveData<List<Alarm>>()
-    val alarmList: LiveData<List<Alarm>> = _alarmList
+    //  var _alarmList = MutableLiveData<List<Alarm>>()
+    var _alarmList = MutableLiveData<ArrayList<Alarm>>()
+
+    val alarmList: LiveData<ArrayList<Alarm>> = _alarmList
 
 
     fun getAlarms() = viewModelScope.launch {
         withContext(Dispatchers.IO) {
-            _alarmList.postValue(repository.getAllAlarm())
+            _alarmList.postValue(repository.getAllAlarm() as ArrayList<Alarm>?)
         }
     }
 
@@ -37,7 +39,6 @@ class MainFragViewModel @ViewModelInject constructor(private val repository: Ala
 
     fun deleteAlarm(alarmId: Int) = viewModelScope.launch {
         repository.deleteAlarm(alarmId)
-
     }
 
 
