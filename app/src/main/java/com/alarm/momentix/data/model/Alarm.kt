@@ -32,7 +32,7 @@ data class Alarm(
     val sunday: Boolean,
     val title: String,
     val tone: String,
-    val vibrate: String,
+    val vibrate: Boolean,
 
     ) : Serializable {
     fun schedule(context: Context) {

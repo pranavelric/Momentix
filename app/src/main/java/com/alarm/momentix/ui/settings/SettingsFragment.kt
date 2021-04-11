@@ -1,12 +1,11 @@
 package com.alarm.momentix.ui.settings
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.alarm.momentix.R
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.alarm.momentix.databinding.SettingsFragmentBinding
 
 

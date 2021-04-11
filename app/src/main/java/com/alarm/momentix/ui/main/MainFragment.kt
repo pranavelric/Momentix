@@ -8,16 +8,41 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.alarm.momentix.MainActivity
 import com.alarm.momentix.R
+import com.alarm.momentix.adapters.AlarmRcAdapter
+import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.databinding.FragmentMainBinding
 import com.alarm.momentix.utils.getStatusBarHeight
 import com.alarm.momentix.utils.share
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
+
+    @Inject
+    lateinit var alarmRcAdapter: AlarmRcAdapter
+
+    private val mainFragViewModel: MainFragViewModel by lazy {
+        ViewModelProvider(this)[MainFragViewModel::class.java]
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mainFragViewModel.alarmList.observe(this, { alarmList ->
+            if (alarmList.isNotEmpty() && !alarmList.isNullOrEmpty()) {
+                alarmRcAdapter.submitList(alarmList)
+            }
+
+        })
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,9 +55,40 @@ class MainFragment : Fragment() {
 
         setHasOptionsMenu(true)
         setSlidingBehaviour()
+        setViews()
         return binding.root
 
     }
+
+    private fun setViews() {
+
+
+        binding.fragmentListalarmsAddAlarm.setOnClickListener {
+
+            val alarm = Alarm(
+                1,
+                1,
+                1,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                "title",
+                "tone",
+                true
+            )
+            mainFragViewModel.insertAlarm(alarm)
+
+        }
+
+
+    }
+
 
     private fun setSlidingBehaviour() {
         val behavior = BottomSheetBehavior.from(binding.bottomSheet)
