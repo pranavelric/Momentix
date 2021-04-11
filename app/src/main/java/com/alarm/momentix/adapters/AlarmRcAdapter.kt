@@ -11,6 +11,7 @@ import com.alarm.momentix.BR
 import com.alarm.momentix.R
 import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.databinding.ItemAlarmBinding
+import com.alarm.momentix.utils.TimePickerUtil
 
 class AlarmRcAdapter() :
     ListAdapter<Alarm, AlarmRcAdapter.MyAlarmViewHolder>(AlarmItemDiffCallback()) {
@@ -20,8 +21,23 @@ class AlarmRcAdapter() :
         fun bind(alarm: Alarm) {
             binding.setVariable(BR.myAlarm, alarm)
             binding.executePendingBindings()
+            binding.itemAlarmTime.text = TimePickerUtil.getFormattedTime(alarm.hour, alarm.minute)
+            binding.itemAlarmStarted.setOnCheckedChangeListener { buttonView, isChecked ->
+                onAlarmCancelClickListener?.let { click ->
+                    click(alarm, isChecked)
+                }
+            }
+            binding.itemAlarmRecurringDelete.setOnClickListener {
+                onAlarmDeleteClickListener?.let { click ->
+                    click(alarm)
+                }
+            }
+
             binding.alarmCard.setOnClickListener {
-                Log.d("RRR", "bind: ")
+
+                onItemClickListener?.let { click ->
+                    click(alarm)
+                }
             }
 
         }
@@ -60,9 +76,18 @@ class AlarmRcAdapter() :
 
 
     private var onItemClickListener: ((Alarm) -> Unit)? = null
-
     fun setOnItemClickListener(listener: (Alarm) -> Unit) {
         onItemClickListener = listener
+    }
+
+    private var onAlarmCancelClickListener: ((Alarm, Boolean) -> Unit)? = null
+    fun setOnAlarmCancelClickListener(listener: (Alarm, Boolean) -> Unit) {
+        onAlarmCancelClickListener = listener
+    }
+
+    private var onAlarmDeleteClickListener: ((Alarm) -> Unit)? = null
+    fun setAlarmDeleteClickListener(listener: (Alarm) -> Unit) {
+        onAlarmDeleteClickListener = listener
     }
 
 

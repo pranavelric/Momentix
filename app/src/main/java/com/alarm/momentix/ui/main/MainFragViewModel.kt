@@ -40,6 +40,7 @@ class MainFragViewModel @ViewModelInject constructor(private val repository: Ala
 
     }
 
+
     fun insertAlarm(alarm: Alarm) = viewModelScope.launch {
         repository.insert(alarm)
         getAlarms()

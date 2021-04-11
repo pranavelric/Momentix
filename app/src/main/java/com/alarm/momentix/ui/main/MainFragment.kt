@@ -39,12 +39,10 @@ class MainFragment : Fragment() {
 
 
         mainFragViewModel.alarmList.observe(this, { alarmList ->
-            Log.d("RRR", "onCreate: ${alarmList}")
             if (alarmList.isNotEmpty() && !alarmList.isNullOrEmpty()) {
                 alarmRcAdapter.submitList(alarmList)
             }
         })
-
 
 
     }
@@ -63,7 +61,25 @@ class MainFragment : Fragment() {
         setSlidingBehaviour()
         setViews()
         getData()
+        setClickListeners()
+
         return binding.root
+
+    }
+
+    private fun setClickListeners() {
+
+         alarmRcAdapter.setOnAlarmCancelClickListener { alarm, isChecked ->
+            val canceledAlarm = alarm
+            canceledAlarm.started = false
+            mainFragViewModel.update(canceledAlarm)
+            context?.let { alarm.cancelAlarm(it) }
+             
+        }
+        alarmRcAdapter.setAlarmDeleteClickListener { alarm->
+            mainFragViewModel.deleteAlarm(alarm.alarmId)
+        }
+
 
     }
 
@@ -75,13 +91,21 @@ class MainFragment : Fragment() {
 
 
         binding.fragmentListalarmsAddAlarm.setOnClickListener {
-findNavController().navigate(R.id.action_mainFragment_to_createAlarmFragment)
+            findNavController().navigate(R.id.action_mainFragment_to_createAlarmFragment)
 
         }
 
 
+
+
         binding.fragmentListalarmsRecylerView.apply {
-            adapter =alarmRcAdapter
+            adapter = alarmRcAdapter
+        }
+        alarmRcAdapter.setOnItemClickListener { alarm ->
+            val bundle = Bundle().apply {
+                putSerializable("alarm", alarm)
+            }
+            findNavController().navigate(R.id.action_mainFragment_to_createAlarmFragment, bundle)
 
         }
     }
