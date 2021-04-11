@@ -208,7 +208,7 @@ class CreateAlarmFragment : Fragment() {
         tone = alarm.tone
 
         ringtone = RingtoneManager.getRingtone(context, Uri.parse(tone))
-        Log.d("RRR", "updateAlarmInfo: ${tone} ${ringtone.getTitle(context)}")
+
         binding.fragmentCreatealarmSetToneName.text = ringtone.getTitle(context)
         if (alarm.vibrate)
             binding.fragmentCreatealarmVibrateSwitch.isChecked = true
