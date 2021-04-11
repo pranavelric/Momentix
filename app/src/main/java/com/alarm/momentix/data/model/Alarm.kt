@@ -87,4 +87,5 @@ data class Alarm(
        context.toast("Alarm cancelded for ${hour}::${minute}")
 
     }
-}
+
+    }

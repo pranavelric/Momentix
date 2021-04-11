@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alarm.momentix.data.local.AlarmRepository
 import com.alarm.momentix.data.model.Alarm
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 //import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -20,8 +22,9 @@ class MainFragViewModel @ViewModelInject constructor(private val repository: Ala
 
 
     fun getAlarms() = viewModelScope.launch {
-//        _alarmList.value = repository.getAllAlarm().value
-        _alarmList.postValue(repository.getAllAlarm().value)
+        withContext(Dispatchers.IO) {
+            _alarmList.postValue(repository.getAllAlarm())
+        }
     }
 
     fun update(alarm: Alarm) = viewModelScope.launch {
@@ -32,13 +35,14 @@ class MainFragViewModel @ViewModelInject constructor(private val repository: Ala
         repository.deleteAll()
     }
 
-    fun deleteAlarm(alarmId: Int)= viewModelScope.launch  {
+    fun deleteAlarm(alarmId: Int) = viewModelScope.launch {
         repository.deleteAlarm(alarmId)
 
     }
 
     fun insertAlarm(alarm: Alarm) = viewModelScope.launch {
         repository.insert(alarm)
+        getAlarms()
     }
 
 

@@ -6,6 +6,7 @@ import com.alarm.momentix.data.model.Alarm
 
 @Dao
 interface AlarmDao {
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(alarm: Alarm)
 
@@ -13,7 +14,8 @@ interface AlarmDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM alarm_table ORDER BY alarmId ASC")
-    suspend fun getAlarms(): LiveData<List<Alarm>>
+    suspend fun getAlarms():List<Alarm>
+
 
     @Update
     suspend fun updateAlarm(alarm: Alarm)

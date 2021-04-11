@@ -2,6 +2,7 @@ package com.alarm.momentix.ui.main
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -35,12 +36,17 @@ class MainFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         mainFragViewModel.alarmList.observe(this, { alarmList ->
+            Log.d("RRR", "onCreate: ${alarmList}")
             if (alarmList.isNotEmpty() && !alarmList.isNullOrEmpty()) {
                 alarmRcAdapter.submitList(alarmList)
             }
-
         })
+
+
+
     }
 
     override fun onCreateView(
@@ -56,8 +62,13 @@ class MainFragment : Fragment() {
         setHasOptionsMenu(true)
         setSlidingBehaviour()
         setViews()
+        getData()
         return binding.root
 
+    }
+
+    private fun getData() {
+        mainFragViewModel.getAlarms()
     }
 
     private fun setViews() {
@@ -66,7 +77,7 @@ class MainFragment : Fragment() {
         binding.fragmentListalarmsAddAlarm.setOnClickListener {
 
             val alarm = Alarm(
-                1,
+                4,
                 1,
                 1,
                 true,
@@ -87,6 +98,10 @@ class MainFragment : Fragment() {
         }
 
 
+        binding.fragmentListalarmsRecylerView.apply {
+            adapter =alarmRcAdapter
+
+        }
     }
 
 
