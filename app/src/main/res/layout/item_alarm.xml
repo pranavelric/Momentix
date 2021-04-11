@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-thin"
-                    android:text="00:00"
+                    android:text="@{myAlarm.hour+`::`+myAlarm.minute}"
                     android:textSize="36sp"
                     android:typeface="serif" />
 
@@ -58,7 +58,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-condensed"
-                        tools:text="Repeating"
+                        tools:text="repeating"
+                        android:text="@{myAlarm.recurring?`repeating`:``}"
                         android:textSize="10sp" />
 
                     <TextView
@@ -67,7 +68,8 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-condensed-medium"
                         android:textSize="16sp"
-                        tools:text="Alarm Title" />
+                        android:text="@{myAlarm.title}"
+                        tools:text="Title" />
 
                 </LinearLayout>
 
@@ -81,7 +83,7 @@
                     android:layout_marginStart="4dp"
                     android:textSize="14sp" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/item_alarm_started"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

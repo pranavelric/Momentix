@@ -75,25 +75,7 @@ class MainFragment : Fragment() {
 
 
         binding.fragmentListalarmsAddAlarm.setOnClickListener {
-
-            val alarm = Alarm(
-                4,
-                1,
-                1,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                true,
-                "title",
-                "tone",
-                true
-            )
-            mainFragViewModel.insertAlarm(alarm)
+findNavController().navigate(R.id.action_mainFragment_to_createAlarmFragment)
 
         }
 

@@ -20,6 +20,15 @@
 
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+
+            android:id="@+id/action_mainFragment_to_createAlarmFragment"
+            app:destination="@id/createAlarmFragment" />
     </fragment>
 
     <fragment
@@ -43,5 +52,12 @@
         android:id="@+id/settingsFragment"
         android:name="com.alarm.momentix.ui.settings.SettingsFragment"
         android:label="settings_fragment"
-        tools:layout="@layout/settings_fragment" />
+        tools:layout="@layout/settings_fragment" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/createAlarmFragment"
+        android:name="com.alarm.momentix.ui.createAlarm.CreateAlarmFragment"
+        android:label="fragment_create_alarm"
+        tools:layout="@layout/fragment_create_alarm" />
 </navigation>
