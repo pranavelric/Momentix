@@ -70,11 +70,17 @@ class MainFragment : Fragment() {
     private fun setClickListeners() {
 
         alarmRcAdapter.setOnAlarmCancelClickListener { alarm, isChecked ->
-            val canceledAlarm = alarm
-            canceledAlarm.started = false
-            mainFragViewModel.update(canceledAlarm)
-            context?.let { alarm.cancelAlarm(it) }
-
+            if (!isChecked) {
+                val canceledAlarm = alarm
+                canceledAlarm.started = false
+                mainFragViewModel.update(canceledAlarm)
+                context?.let { alarm.cancelAlarm(it) }
+            } else {
+                val scheduleAlarm = alarm
+                scheduleAlarm.started = true
+                mainFragViewModel.update(scheduleAlarm)
+                context?.let { alarm.schedule(it) }
+            }
         }
         alarmRcAdapter.setAlarmDeleteClickListener { alarm, position ->
             mainFragViewModel.deleteAlarm(alarm.alarmId)

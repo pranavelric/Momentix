@@ -17,18 +17,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Momentix">
         <service
+            android:name=".services.RescheduleAlarmService"
+            android:enabled="true"
+            android:exported="false"></service>
+        <service
             android:name=".services.AlarmService"
             android:enabled="true"
             android:exported="false" />
-
 
         <receiver android:name=".broadCastReceiver.AlarmBroadCastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
-
 
         <activity android:name=".MainActivity">
             <intent-filter>
