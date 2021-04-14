@@ -16,10 +16,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Momentix">
+        <activity android:name=".ui.activities.RingActivity"></activity>
+
         <service
             android:name=".services.RescheduleAlarmService"
             android:enabled="true"
-            android:exported="false"></service>
+            android:exported="false" />
         <service
             android:name=".services.AlarmService"
             android:enabled="true"
