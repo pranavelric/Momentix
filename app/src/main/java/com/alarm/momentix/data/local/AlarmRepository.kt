@@ -1,5 +1,7 @@
 package com.alarm.momentix.data.local
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.alarm.momentix.data.model.Alarm
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -17,7 +19,13 @@ class AlarmRepository
         dao.updateAlarm(alarm)
     }
 
-suspend  fun getAllAlarm() = dao.getAlarms()
+    suspend fun getAllAlarm() = dao.getAlarms()
+
+    suspend fun getAllAlarmLiveData(): LiveData<List<Alarm>> {
+        val alarmLiveData = MutableLiveData<List<Alarm>>()
+        alarmLiveData.postValue(dao.getAlarms())
+        return alarmLiveData
+    }
 
     suspend fun deleteAlarm(alarmId: Int) {
         dao.delete(alarmId)

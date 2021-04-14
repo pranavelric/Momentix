@@ -100,7 +100,6 @@ class AlarmService : Service() {
                     .addAction(R.drawable.ic_baseline_delete_forever_24, "Dismiss", pStopIntent)
                     .addAction(R.drawable.ic_baseline_repeat_24, "Snooze", null)
                     .build()
-
                 mediaPlayer.setOnPreparedListener {
                     it.start()
                 }
