@@ -19,8 +19,8 @@ import java.util.stream.StreamSupport
 data class Alarm(
     @PrimaryKey
     val alarmId: Int,
-    val hour: Int,
-    val minute: Int,
+    var hour: Int,
+    var minute: Int,
     var started: Boolean,
     val recurring: Boolean,
     val monday: Boolean,
@@ -30,7 +30,7 @@ data class Alarm(
     val friday: Boolean,
     val saturday: Boolean,
     val sunday: Boolean,
-    val title: String,
+    var title: String,
     val tone: String,
     val vibrate: Boolean,
 

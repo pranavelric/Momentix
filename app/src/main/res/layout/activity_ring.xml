@@ -5,5 +5,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activities.RingActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Ring Ring"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/activity_ring_clock"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:layout_constraintBottom_toTopOf="@+id/activity_ring_dismiss"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:srcCompat="@drawable/ic_baseline_delete_forever_24"
+        />
+
+    <Button
+        android:id="@+id/activity_ring_dismiss"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Dismiss"
+        android:layout_marginBottom="7dp"
+        android:textColor="@color/white"
+        android:background="@color/colorOnSecondary_amoled"
+        app:backgroundTint="@color/colorOnSecondary_amoled"
+        app:layout_constraintBottom_toTopOf="@+id/activity_ring_snooze"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/activity_ring_snooze"
+        android:layout_width="0dp"
+        android:layout_height="300dp"
+        android:text="Snooze"
+        android:textColor="@color/white"
+        android:background="@color/secondary_amoled"
+        app:backgroundTint="@color/secondary_amoled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,7 @@ import com.alarm.momentix.R
 import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.ui.activities.RingActivity
 import com.alarm.momentix.utils.Constants
+import java.util.*
 
 class AlarmService : Service() {
     private lateinit var mediaPlayer: MediaPlayer
@@ -46,6 +47,12 @@ class AlarmService : Service() {
 
                 stopForeground(false)
                 stopSelf()
+
+            }
+            Constants.SNOOZE_SERVICE -> {
+
+                snoozeAlarm()
+
 
             }
             else -> {
@@ -87,6 +94,12 @@ class AlarmService : Service() {
                 }
                 val pStopIntent = PendingIntent.getService(this, 100, stopIntent, 0)
 
+                val snoozeIntent = Intent(this, AlarmService::class.java).apply {
+                    action = Constants.SNOOZE_SERVICE
+                }
+                val pSnoozeIntent = PendingIntent.getService(this, 100, snoozeIntent, 0)
+
+
                 //create notification
                 val notification = NotificationCompat.Builder(this, Constants.CHANNEL_ID)
                     .setContentTitle("Ring Ring .. Ring Ring")
@@ -98,7 +111,7 @@ class AlarmService : Service() {
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setFullScreenIntent(pendingIntent, true)
                     .addAction(R.drawable.ic_baseline_delete_forever_24, "Dismiss", pStopIntent)
-                    .addAction(R.drawable.ic_baseline_repeat_24, "Snooze", null)
+                    .addAction(R.drawable.ic_baseline_repeat_24, "Snooze", pSnoozeIntent)
                     .build()
                 mediaPlayer.setOnPreparedListener {
                     it.start()
@@ -123,9 +136,53 @@ class AlarmService : Service() {
         return START_STICKY
     }
 
+
+    private fun snoozeAlarm() {
+
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.add(Calendar.MINUTE, 5)
+
+        if (alarm != null) {
+            alarm!!.hour = calendar.get(Calendar.HOUR_OF_DAY)
+            alarm!!.minute = calendar.get(Calendar.MINUTE)
+            alarm!!.title = "Snooze ${alarm!!.title}"
+        } else {
+
+            alarm = Alarm(
+                Random().nextInt(Integer.MAX_VALUE),
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                "Snooze",
+                RingtoneManager.getActualDefaultRingtoneUri(
+                    baseContext,
+                    RingtoneManager.TYPE_ALARM
+                ).toString(),
+                false
+            )
+
+
+        }
+
+        alarm?.schedule(applicationContext)
+
+        stopSelf()
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.start()
+
+        mediaPlayer.stop()
         vibrator.cancel()
     }
 

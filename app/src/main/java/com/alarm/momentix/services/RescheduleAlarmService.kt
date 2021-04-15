@@ -3,10 +3,8 @@ package com.alarm.momentix.services
 import android.content.Intent
 import android.os.IBinder
 import androidx.lifecycle.LifecycleService
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.alarm.momentix.data.local.AlarmRepository
-import com.alarm.momentix.ui.main.MainFragViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
