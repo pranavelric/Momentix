@@ -22,7 +22,7 @@ class AlarmService : Service() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var vibrator: Vibrator
     private lateinit var ringtone: Uri
-    private lateinit var alarm: Alarm
+    private var alarm: Alarm?=null
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -73,9 +73,9 @@ class AlarmService : Service() {
                 var alarmTitle = "My Alarm"
 
                 if (alarm != null) {
-                    alarmTitle = alarm.title
+                    alarmTitle = alarm!!.title
                     try {
-                        mediaPlayer.setDataSource(this.baseContext, Uri.parse(alarm.tone))
+                        mediaPlayer.setDataSource(this.baseContext, Uri.parse(alarm!!.tone))
                         mediaPlayer.prepareAsync()
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -117,7 +117,7 @@ class AlarmService : Service() {
                     it.start()
                 }
 
-                if (alarm.vibrate) {
+                if (alarm?.vibrate == true) {
                     val pattern = longArrayOf(0, 100, 1000)
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
                         vibrator.vibrate(VibrationEffect.createWaveform(pattern, 0))
@@ -173,7 +173,7 @@ class AlarmService : Service() {
 
         }
 
-        alarm?.schedule(applicationContext)
+        alarm?.schedule(baseContext)
 
         stopSelf()
     }

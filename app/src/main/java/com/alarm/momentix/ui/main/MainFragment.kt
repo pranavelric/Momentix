@@ -83,6 +83,9 @@ class MainFragment : Fragment() {
             }
         }
         alarmRcAdapter.setAlarmDeleteClickListener { alarm, position ->
+            alarm.started=false
+            context?.let { alarm.cancelAlarm(it) }
+            mainFragViewModel.update(alarm)
             mainFragViewModel.deleteAlarm(alarm.alarmId)
             alarmRcAdapter.notifyItemRemoved(position)
             alarmRcAdapter.notifyItemRangeChanged(position, alarmRcAdapter.itemCount)
