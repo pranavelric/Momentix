@@ -7,6 +7,19 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+    <uses-permission
+        android:name="android.permission.WRITE_SETTINGS"
+        android:maxSdkVersion="19" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        android:maxSdkVersion="22" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
 
     <application
         android:name=".momentix"
@@ -16,22 +29,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Momentix">
-        <activity android:name=".ui.activities.RingActivity"></activity>
+        <activity
+            android:name=".ui.activities.RingActivity"
+            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity="" />
 
         <service
             android:name=".services.RescheduleAlarmService"
+            android:description="@string/alarm_service_desc"
             android:enabled="true"
             android:exported="false" />
         <service
             android:name=".services.AlarmService"
+            android:description="@string/alarm_service_desc"
             android:enabled="true"
             android:exported="false" />
 
         <receiver android:name=".broadCastReceiver.AlarmBroadCastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
             </intent-filter>
         </receiver>
+
+
 
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -94,11 +94,8 @@ class CreateAlarmFragment : Fragment() {
             isVibrate = isChecked
 
         }
-//        binding.fragmentCreatealarmTimePicker.setOnTimeChangedListener { view, hourOfDay, minute ->
-//
-//
-//
-//        }
+
+
 
         binding.fragmentCreatealarmCancelAlarm.setOnClickListener {
 
@@ -153,6 +150,7 @@ class CreateAlarmFragment : Fragment() {
             tone = tone,
             vibrate = isVibrate
         )
+
 
         createAlarmViewModel.updateAlarm(updateAlarm)
         context?.let { updateAlarm.schedule(it) }
@@ -223,6 +221,7 @@ class CreateAlarmFragment : Fragment() {
             val title = ringtone.getTitle(context)
             if (uri != null) {
                 tone = uri.toString()
+
                 if (!title.isNullOrEmpty()) {
                     binding.fragmentCreatealarmSetToneName.text = title
                 }

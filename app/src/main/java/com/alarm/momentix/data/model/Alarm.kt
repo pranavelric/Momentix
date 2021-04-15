@@ -1,19 +1,21 @@
 package com.alarm.momentix.data.model
 
 import android.app.AlarmManager
+import android.app.AlarmManager.AlarmClockInfo
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.alarm.momentix.MainActivity
 import com.alarm.momentix.broadCastReceiver.AlarmBroadCastReceiver
 import com.alarm.momentix.utils.Constants.ALARM_OBJ
 import com.alarm.momentix.utils.Constants.BUNDLE_ALARM_OBJ
 import com.alarm.momentix.utils.toast
 import java.io.Serializable
 import java.util.*
-import java.util.stream.StreamSupport
 
 @Entity(tableName = "alarm_table")
 data class Alarm(
@@ -60,7 +62,30 @@ data class Alarm(
 
             context.toast("One time alarm set for ${title} ${hour} ${minute}")
 
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+
+
+                alarmManager.setAlarmClock(
+                    AlarmClockInfo(
+                        calendar.timeInMillis, PendingIntent.getActivity(
+                            context, 0, Intent(
+                                context,
+                                MainActivity::class.java
+                            ), 0
+                        )
+                    ),
+                    pendingIntent
+                )
+
+
+
+
+
+            } else {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+
+            }
+
 
         } else {
             context.toast("Recurring time alarm set for ${title} ${hour} ${minute}")
@@ -82,10 +107,10 @@ data class Alarm(
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmBroadCastReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0)
-       alarmManager.cancel(pendingIntent)
-       this.started=false
-       context.toast("Alarm cancelded for ${hour}::${minute}")
+        alarmManager.cancel(pendingIntent)
+        this.started = false
+        context.toast("Alarm cancelded for ${hour}::${minute}")
 
     }
 
-    }
+}

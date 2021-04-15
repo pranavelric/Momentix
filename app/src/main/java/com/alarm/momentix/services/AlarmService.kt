@@ -4,8 +4,10 @@ import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager
+import android.media.VolumeShaper
 import android.net.Uri
 import android.os.Build
 import android.os.IBinder
@@ -22,7 +24,10 @@ class AlarmService : Service() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var vibrator: Vibrator
     private lateinit var ringtone: Uri
-    private var alarm: Alarm?=null
+    private var alarm: Alarm? = null
+
+    private lateinit var config:VolumeShaper.Configuration
+    private lateinit var volumeShaper: VolumeShaper
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -32,6 +37,20 @@ class AlarmService : Service() {
         super.onCreate()
         mediaPlayer = MediaPlayer()
         mediaPlayer.isLooping = true
+        mediaPlayer.setAudioAttributes(
+            AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
+        )
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+             config = VolumeShaper.Configuration.Builder()
+                .setDuration(10000)
+                .setCurve(floatArrayOf(0f, 1f), floatArrayOf(0f, 1f))
+                .setInterpolatorType(VolumeShaper.Configuration.INTERPOLATOR_TYPE_LINEAR)
+                .build()
+
+
+        }
+
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         ringtone = RingtoneManager.getActualDefaultRingtoneUri(
             this.baseContext,
@@ -77,6 +96,12 @@ class AlarmService : Service() {
                     try {
                         mediaPlayer.setDataSource(this.baseContext, Uri.parse(alarm!!.tone))
                         mediaPlayer.prepareAsync()
+
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                            volumeShaper = mediaPlayer.createVolumeShaper(config)
+
+                        }
+
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -84,6 +109,13 @@ class AlarmService : Service() {
                     try {
                         mediaPlayer.setDataSource(this.baseContext, ringtone)
                         mediaPlayer.prepareAsync()
+
+
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                            volumeShaper = mediaPlayer.createVolumeShaper(config)
+
+                        }
+
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -115,6 +147,12 @@ class AlarmService : Service() {
                     .build()
                 mediaPlayer.setOnPreparedListener {
                     it.start()
+
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+                        volumeShaper.apply(VolumeShaper.Operation.PLAY)
+
+                    }
+
                 }
 
                 if (alarm?.vibrate == true) {

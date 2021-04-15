@@ -43,7 +43,8 @@ class RingActivity : AppCompatActivity() {
         }
         val bundle = intent.getBundleExtra(Constants.BUNDLE_ALARM_OBJ)
         if (bundle != null) {
-            alarm =( bundle.getSerializable(Constants.BUNDLE_ALARM_OBJ) as? Alarm)!!
+            if (bundle.getSerializable(Constants.BUNDLE_ALARM_OBJ) != null)
+                alarm = (bundle.getSerializable(Constants.BUNDLE_ALARM_OBJ) as? Alarm)!!
         }
 
         binding.activityRingDismiss.setOnClickListener {
