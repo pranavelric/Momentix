@@ -33,6 +33,8 @@
             android:name=".ui.activities.RingActivity"
             android:launchMode="singleTask"
             android:excludeFromRecents="true"
+         android:configChanges="uiMode|orientation|screenSize|keyboard"
+            android:taskAffinity=""
       />
 
         <service

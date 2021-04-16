@@ -38,6 +38,7 @@ class AlarmService : Service() {
         super.onCreate()
         mediaPlayer = MediaPlayer()
         mediaPlayer.isLooping = true
+        mediaPlayer.setVolume(100f,100f)
         mediaPlayer.setAudioAttributes(
             AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
         )
@@ -45,7 +46,7 @@ class AlarmService : Service() {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
              config = VolumeShaper.Configuration.Builder()
                 .setDuration(10000)
-                .setCurve(floatArrayOf(0f, 1f), floatArrayOf(0f, 1f))
+                .setCurve(floatArrayOf(0f,0.2f,0.3f,0.5f,1f), floatArrayOf(0f,0.2f,0.3f,0.5f ,1f))
                 .setInterpolatorType(VolumeShaper.Configuration.INTERPOLATOR_TYPE_LINEAR)
                 .build()
 
@@ -146,8 +147,8 @@ class AlarmService : Service() {
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setFullScreenIntent(pendingIntent, true)
-                    .addAction(R.drawable.ic_baseline_delete_forever_24, "Dismiss", pStopIntent)
-                    .addAction(R.drawable.ic_baseline_repeat_24, "Snooze", pSnoozeIntent)
+//                    .addAction(R.drawable.ic_baseline_delete_forever_24, "Dismiss", pStopIntent)
+//                    .addAction(R.drawable.ic_baseline_repeat_24, "Snooze", pSnoozeIntent)
                     .build()
                 mediaPlayer.setOnPreparedListener {
                     it.start()
