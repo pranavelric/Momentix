@@ -31,6 +31,7 @@ class MainFragViewModel @ViewModelInject constructor(private val repository: Ala
 
     fun update(alarm: Alarm) = viewModelScope.launch {
         repository.update(alarm)
+        getAlarms()
     }
 
     fun deleteAll() = viewModelScope.launch {

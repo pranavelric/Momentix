@@ -6,6 +6,7 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -43,8 +44,8 @@ class RingActivity : AppCompatActivity() {
         }
         val bundle = intent.getBundleExtra(Constants.BUNDLE_ALARM_OBJ)
         if (bundle != null) {
-            if (bundle.getSerializable(Constants.BUNDLE_ALARM_OBJ) != null)
-                alarm = (bundle.getSerializable(Constants.BUNDLE_ALARM_OBJ) as? Alarm)!!
+            if (bundle.getSerializable(Constants.ALARM_OBJ) != null)
+                alarm = (bundle.getSerializable(Constants.ALARM_OBJ) as? Alarm)!!
         }
 
         binding.activityRingDismiss.setOnClickListener {
@@ -126,8 +127,12 @@ class RingActivity : AppCompatActivity() {
     private fun dismissAlarm() {
 
         if (alarm != null) {
+            if(!alarm!!.recurring)
             alarm!!.started = false
+
             alarm!!.cancelAlarm(baseContext)
+
+            Log.d("RRR", "dismissAlarm: ")
             mainFragViewModel.update(alarm!!)
         }
         val intentService = Intent(applicationContext, AlarmService::class.java)

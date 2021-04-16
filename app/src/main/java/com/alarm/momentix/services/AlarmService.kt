@@ -13,6 +13,7 @@ import android.os.Build
 import android.os.IBinder
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.alarm.momentix.R
 import com.alarm.momentix.data.model.Alarm
@@ -79,9 +80,12 @@ class AlarmService : Service() {
                 val bundle = intent?.getBundleExtra(Constants.BUNDLE_ALARM_OBJ)
                 if (bundle != null) {
                     alarm = bundle.getSerializable(Constants.ALARM_OBJ) as Alarm
+
                 }
                 val notificationIntent = Intent(this, RingActivity::class.java).apply {
+
                     putExtra(Constants.BUNDLE_ALARM_OBJ, bundle)
+
                 }
                 val pendingIntent = PendingIntent.getActivity(
                     this,
