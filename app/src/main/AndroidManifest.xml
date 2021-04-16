@@ -31,10 +31,9 @@
         android:theme="@style/Theme.Momentix">
         <activity
             android:name=".ui.activities.RingActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|navigation"
+            android:launchMode="singleTask"
             android:excludeFromRecents="true"
-            android:launchMode="singleInstance"
-            android:taskAffinity="" />
+      />
 
         <service
             android:name=".services.RescheduleAlarmService"
@@ -50,6 +49,7 @@
         <receiver android:name=".broadCastReceiver.AlarmBroadCastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <category android:name="android.intent.category.DEFAULT"/>
                 <action android:name="android.intent.action.TIMEZONE_CHANGED" />
                 <action android:name="android.intent.action.TIME_SET" />
             </intent-filter>

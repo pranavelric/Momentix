@@ -1,6 +1,5 @@
 package com.alarm.momentix.data.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.alarm.momentix.data.model.Alarm
 
@@ -13,7 +12,7 @@ interface AlarmDao {
     @Query("DELETE FROM alarm_table")
     suspend fun deleteAll()
 
-    @Query("SELECT * FROM alarm_table ORDER BY alarmId ASC")
+    @Query("SELECT * FROM alarm_table ORDER BY hour, minute ASC")
     suspend fun getAlarms():List<Alarm>
 
 

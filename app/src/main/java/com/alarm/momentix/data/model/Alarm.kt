@@ -90,16 +90,18 @@ data class Alarm(
         } else {
             context.toast("Recurring time alarm set for ${title} ${hour} ${minute}")
             val RUN_DAILY: Long = 24 * 60 * 60 * 1000
-            alarmManager.setRepeating(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                RUN_DAILY,
-                pendingIntent
-            )
+
+            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.timeInMillis,RUN_DAILY,pendingIntent)
+
+//            alarmManager.setRepeating(
+//                AlarmManager.RTC_WAKEUP,
+//                calendar.timeInMillis,
+//                RUN_DAILY,
+//                pendingIntent
+//            )
 
         }
         this.started = true
-
     }
 
     fun cancelAlarm(context: Context) {
