@@ -24,15 +24,17 @@ class RescheduleAlarmService : LifecycleService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
 
-        lifecycleScope.launch {
-            repository.getAllAlarmLiveData().observe(this@RescheduleAlarmService, { list ->
-                for (a in list) {
-                    if (a.started) {
-                        a.schedule(applicationContext)
-                    }
+
+
+        repository.getAllLiveAlarm().observe(this@RescheduleAlarmService, { list ->
+            for (a in list) {
+                if (a.started) {
+                    a.schedule(applicationContext)
                 }
-            })
-        }
+            }
+        })
+
+
 
 
 

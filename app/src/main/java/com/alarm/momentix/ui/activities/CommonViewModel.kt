@@ -1,4 +1,4 @@
-package com.alarm.momentix.ui.main
+package com.alarm.momentix.ui.activities
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
@@ -14,8 +14,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
-class MainFragViewModel @ViewModelInject constructor(private val repository: AlarmRepository) :
+class CommonViewModel @ViewModelInject constructor(private val repository: AlarmRepository) :
     ViewModel() {
+
+
 
     fun getAllLiveAlarm(): LiveData<List<Alarm>> {
         return repository.getAllLiveAlarm()
@@ -35,9 +37,9 @@ class MainFragViewModel @ViewModelInject constructor(private val repository: Ala
         repository.deleteAlarm(alarmId)
     }
 
+
     fun insertAlarm(alarm: Alarm) = viewModelScope.launch {
         repository.insert(alarm)
-
     }
 
 

@@ -28,7 +28,7 @@ class AlarmRcAdapter() :
             }
             binding.itemAlarmRecurringDelete.setOnClickListener {
                 onAlarmDeleteClickListener?.let { click ->
-                    click(alarm,position)
+                    click(alarm, position)
                 }
             }
 
@@ -62,11 +62,12 @@ class AlarmRcAdapter() :
     }
 
     override fun onBindViewHolder(holder: MyAlarmViewHolder, position: Int) {
-        holder.bind(getItem(position),position)
+        holder.bind(getItem(position), position)
     }
 
-    override fun getItemCount(): Int {
-        return super.getItemCount()
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     override fun getItemId(position: Int): Long {
@@ -84,8 +85,8 @@ class AlarmRcAdapter() :
         onAlarmCancelClickListener = listener
     }
 
-    private var onAlarmDeleteClickListener: ((Alarm,Int) -> Unit)? = null
-    fun setAlarmDeleteClickListener(listener: (Alarm,Int) -> Unit) {
+    private var onAlarmDeleteClickListener: ((Alarm, Int) -> Unit)? = null
+    fun setAlarmDeleteClickListener(listener: (Alarm, Int) -> Unit) {
         onAlarmDeleteClickListener = listener
     }
 

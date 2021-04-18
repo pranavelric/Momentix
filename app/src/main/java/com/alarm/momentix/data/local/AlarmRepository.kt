@@ -18,14 +18,8 @@ class AlarmRepository
     suspend fun update(alarm: Alarm) {
         dao.updateAlarm(alarm)
     }
-
-    suspend fun getAllAlarm() = dao.getAlarms()
-
-    suspend fun getAllAlarmLiveData(): LiveData<List<Alarm>> {
-        val alarmLiveData = MutableLiveData<List<Alarm>>()
-        alarmLiveData.postValue(dao.getAlarms())
-        return alarmLiveData
-    }
+    
+    fun getAllLiveAlarm() = dao.getLiveAlarms()
 
     suspend fun deleteAlarm(alarmId: Int) {
         dao.delete(alarmId)

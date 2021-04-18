@@ -9,7 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.alarm.momentix.MainActivity
+import com.alarm.momentix.ui.activities.MainActivity
 import com.alarm.momentix.broadCastReceiver.AlarmBroadCastReceiver
 import com.alarm.momentix.utils.Constants.ALARM_OBJ
 import com.alarm.momentix.utils.Constants.BUNDLE_ALARM_OBJ
