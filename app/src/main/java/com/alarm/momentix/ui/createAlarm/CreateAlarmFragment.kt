@@ -6,17 +6,14 @@ import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.alarm.momentix.R
 import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.databinding.FragmentCreateAlarmBinding
+import com.alarm.momentix.ui.activities.MainActivity
 import com.alarm.momentix.utils.TimePickerUtil
 import com.alarm.momentix.utils.gone
 import com.alarm.momentix.utils.visible
@@ -24,7 +21,6 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
-import kotlin.math.min
 import kotlin.random.Random
 
 
@@ -37,10 +33,6 @@ class CreateAlarmFragment : Fragment() {
     lateinit var binding: FragmentCreateAlarmBinding
     private var hour: Int = 0
     private var minute: Int = 0
-
-    private val createAlarmViewModel: CreateAlarmViewModel by lazy {
-        ViewModelProvider(this).get(CreateAlarmViewModel::class.java)
-    }
 
     private var isVibrate: Boolean = false
     lateinit var tone: String
@@ -58,10 +50,12 @@ class CreateAlarmFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentCreateAlarmBinding.inflate(layoutInflater, container, false)
         tone = RingtoneManager.getActualDefaultRingtoneUri(context, RingtoneManager.TYPE_ALARM)
             .toString()
         ringtone = RingtoneManager.getRingtone(context, Uri.parse(tone))
+
         setData()
         setClickListeners()
 
@@ -73,12 +67,13 @@ class CreateAlarmFragment : Fragment() {
         binding.fragmentCreatealarmRecurring.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 binding.fragmentCreatealarmRecurringOptions.visible()
-
             } else {
                 binding.fragmentCreatealarmRecurringOptions.gone()
             }
-
         }
+
+
+
 
         binding.fragmentCreatealarmScheduleAlarm.setOnClickListener {
             if (alarm != null) {
@@ -90,22 +85,27 @@ class CreateAlarmFragment : Fragment() {
         }
 
         binding.fragmentCreatealarmCardSound.setOnClickListener {
-            val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+            Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
                 putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM)
                 putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select alert sound for alarm")
                 putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(tone))
                 startActivityForResult(this, 5)
             }
         }
-        binding.fragmentCreatealarmVibrateSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-            isVibrate = isChecked
 
+        binding.itemAlarmSound.setOnClickListener {
+            Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+                putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM)
+                putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select alert sound for alarm")
+                putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, Uri.parse(tone))
+                startActivityForResult(this, 5)
+            }
         }
 
-
-
+        binding.fragmentCreatealarmVibrateSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
+            isVibrate = isChecked
+        }
         binding.fragmentCreatealarmCancelAlarm.setOnClickListener {
-
             findNavController().navigateUp()
         }
 
@@ -119,7 +119,7 @@ class CreateAlarmFragment : Fragment() {
     }
 
 
-    fun timePickerDialog(h: Int?, m: Int?) {
+    private fun timePickerDialog(h: Int?, m: Int?) {
 
         val hr = h ?: Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
         val mi = m ?: Calendar.getInstance().get(Calendar.MINUTE)
@@ -131,9 +131,7 @@ class CreateAlarmFragment : Fragment() {
             .setMinute(mi)
             .setTitleText("Select time")
             .build();
-
         timePickerDialog.show(requireActivity().supportFragmentManager, "fragment_tag");
-
         timePickerDialog.addOnPositiveButtonClickListener {
 
             hour = timePickerDialog.hour
@@ -152,8 +150,8 @@ class CreateAlarmFragment : Fragment() {
 
 
     private fun scheduleAlarm() {
-        Log.d("RRR", "scheduleAlarm:${hour} ${minute} ")
-        val alarmTitle: String = (binding.alarmTitle.text ?: "My Alarm").toString()
+
+        val alarmTitle: String = (binding.alarmTitle.text).toString()
         val alarmId = Random(System.currentTimeMillis()).nextInt(Int.MAX_VALUE)
         val alarm = Alarm(
             alarmId = alarmId,
@@ -172,7 +170,8 @@ class CreateAlarmFragment : Fragment() {
             tone = tone,
             vibrate = isVibrate
         )
-        createAlarmViewModel.insertAlarm(alarm)
+
+        (activity as MainActivity).commonViewModel.insertAlarm(alarm)
         context?.let { alarm.schedule(it) }
 
     }
@@ -199,7 +198,7 @@ class CreateAlarmFragment : Fragment() {
         )
 
 
-        createAlarmViewModel.updateAlarm(updateAlarm)
+        (activity as MainActivity).commonViewModel.update(updateAlarm)
         context?.let { updateAlarm.schedule(it) }
 
     }
@@ -215,8 +214,11 @@ class CreateAlarmFragment : Fragment() {
             )
         )
 
-        if (alarm != null) {
+        hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        minute = Calendar.getInstance().get(Calendar.MINUTE)
 
+
+        if (alarm != null) {
             updateAlarmInfo(alarm!!)
         }
 
@@ -227,8 +229,8 @@ class CreateAlarmFragment : Fragment() {
 
         binding.timePickerButton.setText(
             TimePickerUtil.getFormattedTime(
-                alarm!!.hour,
-                alarm!!.minute
+                alarm.hour,
+                alarm.minute
             )
         )
         hour = alarm.hour

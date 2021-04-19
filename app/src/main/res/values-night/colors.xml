@@ -9,6 +9,9 @@
     <color name="gray">#9E9E9E</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#040b14</color>
+    <color name="green">#44BD49</color>
+    <color name="red">#EA3430</color>
+    <color name="primary_color_light">#081629</color>
 
     <color name="text_color">#FFFFFF</color>
     <!-- amoled-->

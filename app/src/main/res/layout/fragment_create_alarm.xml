@@ -32,23 +32,12 @@
                     android:background="@color/primary_color"
                     app:layout_collapseMode="parallax">
 
-                    <ImageButton
-                        android:id="@+id/details_back_btn"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="?attr/actionBarSize"
-                        android:layout_marginStart="@dimen/_2sdp"
-                        android:layout_marginTop="?attr/actionBarSize"
-                        android:layout_marginEnd="@dimen/_10sdp"
-                        android:background="@android:color/transparent"
-                        android:src="@drawable/ic_baseline_arrow_back_24"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/expandedImage"
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="250dp"
                         android:alpha="0.8"
                         android:background="@color/primary_color"
                         android:scaleType="centerCrop"
@@ -105,23 +94,19 @@
                         app:cornerRadius="@dimen/_10sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
+                        android:backgroundTint="@color/secondary_amoled"
                         app:rippleColor="@color/secondary_amoled" />
 
 
-
-                    <androidx.appcompat.widget.SwitchCompat
-                        android:id="@+id/item_alarm_started"
+                    <ImageButton
+                        android:id="@+id/item_alarm_sound"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginEnd="@dimen/_16sdp"
-                        android:checked="false"
-                        android:thumb="@drawable/switch_thum"
-                        android:track="@drawable/switch_track_custom"
-                        app:layout_constraintBottom_toBottomOf="@id/time_picker_button"
-                        app:layout_constraintTop_toTopOf="@id/time_picker_button"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/ic_volume"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:track="@drawable/switch_track_custom" />
+                        app:layout_constraintTop_toTopOf="@id/time_picker_button" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -129,35 +114,37 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fragment_createalarm_title"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_22sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
-                    android:background="@android:color/transparent"
                     android:textColorHint="@color/text_color"
+                    app:boxStrokeColor="@color/text_color"
+                    app:boxBackgroundColor="@color/primary_color_light"
+                    app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
+                    app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                    app:boxStrokeWidthFocused="@dimen/_4sdp"
                     app:counterEnabled="true"
                     app:counterMaxLength="30"
-               >
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/alarm_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
                         android:hint="Alarm Title"
                         android:imeOptions="actionDone"
                         android:inputType="text"
                         android:lines="1"
                         android:maxLength="30"
                         android:maxLines="1"
-                        android:textColor="@color/text_color"
                         android:minLines="1"
+                        android:textColor="@color/text_color"
                         android:textSize="@dimen/_12sdp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
                 <CheckBox
@@ -175,7 +162,9 @@
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/_16sdp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_title" />
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_title"
+
+                    />
 
                 <HorizontalScrollView
                     android:id="@+id/fragment_createalarm_recurring_options"
@@ -305,23 +294,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="@dimen/_20sdp"
-                    >
+                    android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/fragment_createalarm_vibrateText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/_10sdp"
+                        android:layout_weight="1"
                         android:text="Vibrate"
                         android:textAlignment="textStart"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textSize="25sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_card_sound"
-                        android:layout_weight="1"
-                        />
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_card_sound" />
 
                     <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/fragment_createalarm_vibrate_switch"
@@ -329,27 +317,22 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_margin="@dimen/_10sdp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_card_sound"
                         android:thumb="@drawable/switch_thum"
                         android:track="@drawable/switch_track_custom"
-                        app:track="@drawable/switch_track_custom"
-                        />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_card_sound"
+                        app:track="@drawable/switch_track_custom" />
 
                 </LinearLayout>
 
 
-
-<!--                <TimePicker-->
-<!--                    android:id="@+id/fragment_createalarm_timePicker"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:timePickerMode="spinner"-->
-<!--                    android:layout_marginTop="@dimen/_20sdp"-->
-<!--                    />-->
-
-
-
+                <!--                <TimePicker-->
+                <!--                    android:id="@+id/fragment_createalarm_timePicker"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:timePickerMode="spinner"-->
+                <!--                    android:layout_marginTop="@dimen/_20sdp"-->
+                <!--                    />-->
 
 
             </LinearLayout>
@@ -361,10 +344,9 @@
             android:id="@+id/fragment_createalarm_button_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_gravity="bottom"
-            >
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
                 android:id="@+id/fragment_createalarm_cancelAlarm"
@@ -379,7 +361,10 @@
                 android:fontFamily="monospace"
                 android:text="Back"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:backgroundTint="@color/red"
+
+                />
 
             <Button
                 android:id="@+id/fragment_createalarm_scheduleAlarm"
@@ -391,15 +376,14 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_1sdp"
                 android:layout_weight="1"
+
                 android:fontFamily="monospace"
                 android:text="Schedule Alarm"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:backgroundTint="@color/green"
 
-
-
-
-
+                />
 
 
         </LinearLayout>
