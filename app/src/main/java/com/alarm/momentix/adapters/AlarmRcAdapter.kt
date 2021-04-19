@@ -17,7 +17,9 @@ class AlarmRcAdapter() :
     inner class MyAlarmViewHolder(private val binding: ItemAlarmBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+
         fun bind(alarm: Alarm, position: Int) {
+
             binding.setVariable(BR.myAlarm, alarm)
             binding.executePendingBindings()
             binding.itemAlarmTime.text = TimePickerUtil.getFormattedTime(alarm.hour, alarm.minute)

@@ -11,8 +11,7 @@
     <com.cunoraz.gifview.library.GifView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleX="2"
-        android:scaleY="2"
+
         app:gif="@drawable/yellow_clock" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

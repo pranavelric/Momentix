@@ -6,12 +6,12 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="gray">#9E9E9E</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#040b14</color>
 
 
-
-<!-- amoled-->
+    <!-- amoled-->
     <color name="primary_color_amoled">#000000</color>
     <color name="primary_color_amoled_variant">#000000</color>
     <color name="colorOnPrimary_amoled">#FFFFFF</color>
@@ -19,7 +19,9 @@
     <color name="colorSecondaryVariant_amoled">#AA8F16</color>
     <color name="colorOnSecondary_amoled">#000000</color>
 
-
-
+    <color name="switchTrack">#F8D01F</color>
+    <color name="switchTrackDisable">#FF3700B3</color>
+    <color name="switchTrackActive">#AA8F16</color>
+    <color name="switchTrackNormal">#AA8F16</color>
 
 </resources>
