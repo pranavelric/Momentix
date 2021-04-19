@@ -10,7 +10,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#040b14</color>
 
-
+    <color name="text_color">#FFFFFF</color>
     <!-- amoled-->
     <color name="primary_color_amoled">#000000</color>
     <color name="primary_color_amoled_variant">#000000</color>

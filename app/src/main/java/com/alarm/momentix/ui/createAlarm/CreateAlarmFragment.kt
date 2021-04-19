@@ -20,7 +20,11 @@ import com.alarm.momentix.databinding.FragmentCreateAlarmBinding
 import com.alarm.momentix.utils.TimePickerUtil
 import com.alarm.momentix.utils.gone
 import com.alarm.momentix.utils.visible
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import kotlin.math.min
 import kotlin.random.Random
 
 
@@ -31,6 +35,9 @@ class CreateAlarmFragment : Fragment() {
 
     private var alarm: Alarm? = null
     lateinit var binding: FragmentCreateAlarmBinding
+    private var hour: Int = 0
+    private var minute: Int = 0
+
     private val createAlarmViewModel: CreateAlarmViewModel by lazy {
         ViewModelProvider(this).get(CreateAlarmViewModel::class.java)
     }
@@ -102,16 +109,56 @@ class CreateAlarmFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        binding.timePickerButton.setOnClickListener {
+            if (alarm != null)
+                timePickerDialog(alarm!!.hour, alarm!!.minute)
+            else
+                timePickerDialog(null, null)
+        }
+
     }
 
-    private fun scheduleAlarm() {
 
+    fun timePickerDialog(h: Int?, m: Int?) {
+
+        val hr = h ?: Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
+        val mi = m ?: Calendar.getInstance().get(Calendar.MINUTE)
+
+
+        val timePickerDialog = MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_12H)
+            .setHour(hr)
+            .setMinute(mi)
+            .setTitleText("Select time")
+            .build();
+
+        timePickerDialog.show(requireActivity().supportFragmentManager, "fragment_tag");
+
+        timePickerDialog.addOnPositiveButtonClickListener {
+
+            hour = timePickerDialog.hour
+            minute = timePickerDialog.minute
+
+            binding.timePickerButton.setText(TimePickerUtil.getFormattedTime(hour, minute))
+        }
+        timePickerDialog.addOnNegativeButtonClickListener {
+            hour = timePickerDialog.hour
+            minute = timePickerDialog.minute
+            binding.timePickerButton.setText(TimePickerUtil.getFormattedTime(hour, minute))
+        }
+
+
+    }
+
+
+    private fun scheduleAlarm() {
+        Log.d("RRR", "scheduleAlarm:${hour} ${minute} ")
         val alarmTitle: String = (binding.alarmTitle.text ?: "My Alarm").toString()
         val alarmId = Random(System.currentTimeMillis()).nextInt(Int.MAX_VALUE)
         val alarm = Alarm(
             alarmId = alarmId,
-            hour = TimePickerUtil.getTimePickerHour(binding.fragmentCreatealarmTimePicker),
-            minute = TimePickerUtil.getTimePickerMinute(binding.fragmentCreatealarmTimePicker),
+            hour = hour,
+            minute = minute,
             started = true,
             recurring = binding.fragmentCreatealarmRecurring.isChecked,
             monday = binding.fragmentCreatealarmCheckMon.isChecked,
@@ -135,8 +182,8 @@ class CreateAlarmFragment : Fragment() {
         val alarmTitle: String = (binding.alarmTitle.text).toString()
         val updateAlarm = Alarm(
             alarmId = alarm?.alarmId!!,
-            hour = TimePickerUtil.getTimePickerHour(binding.fragmentCreatealarmTimePicker),
-            minute = TimePickerUtil.getTimePickerMinute(binding.fragmentCreatealarmTimePicker),
+            hour = hour,
+            minute = minute,
             started = true,
             recurring = binding.fragmentCreatealarmRecurring.isChecked,
             monday = binding.fragmentCreatealarmCheckMon.isChecked,
@@ -161,22 +208,31 @@ class CreateAlarmFragment : Fragment() {
 
         binding.fragmentCreatealarmSetToneName.text = ringtone.getTitle(context)
 
+        binding.timePickerButton.setText(
+            TimePickerUtil.getFormattedTime(
+                Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
+                Calendar.getInstance().get(Calendar.MINUTE)
+            )
+        )
+
         if (alarm != null) {
+
             updateAlarmInfo(alarm!!)
         }
+
 
     }
 
     private fun updateAlarmInfo(alarm: Alarm) {
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            binding.fragmentCreatealarmTimePicker.hour = alarm.hour
-            binding.fragmentCreatealarmTimePicker.minute = alarm.minute
-
-        } else {
-            binding.fragmentCreatealarmTimePicker.currentHour = alarm.hour
-            binding.fragmentCreatealarmTimePicker.currentMinute = alarm.minute
-        }
+        binding.timePickerButton.setText(
+            TimePickerUtil.getFormattedTime(
+                alarm!!.hour,
+                alarm!!.minute
+            )
+        )
+        hour = alarm.hour
+        minute = alarm.minute
         if (alarm.recurring) {
             binding.fragmentCreatealarmRecurring.isChecked = true
             binding.fragmentCreatealarmRecurringOptions.visible()

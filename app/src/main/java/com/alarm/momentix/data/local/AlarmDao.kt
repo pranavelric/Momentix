@@ -16,6 +16,9 @@ interface AlarmDao {
     @Query("SELECT * FROM alarm_table ORDER BY hour, minute ASC")
     fun getLiveAlarms():LiveData<List<Alarm>>
 
+    @Query("SELECT * FROM alarm_table ORDER BY hour, minute ASC")
+    suspend  fun getAllAlarms():List<Alarm>
+
 
 
     @Update

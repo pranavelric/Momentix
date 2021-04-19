@@ -11,9 +11,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary_color">#040b14</color>
 
+    <color name="text_color">#000000</color>
 
-
-<!-- amoled-->
+    <!-- amoled-->
     <color name="primary_color_amoled">#000000</color>
     <color name="primary_color_amoled_variant">#000000</color>
     <color name="colorOnPrimary_amoled">#FFFFFF</color>
@@ -24,8 +24,6 @@
     <color name="switchTrackDisable">#FF3700B3</color>
     <color name="switchTrackActive">#AA8F16</color>
     <color name="switchTrackNormal">#AA8F16</color>
-
-
 
 
 </resources>

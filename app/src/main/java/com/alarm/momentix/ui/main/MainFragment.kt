@@ -1,18 +1,21 @@
 package com.alarm.momentix.ui.main
 
-import android.os.Build
+import android.graphics.*
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.alarm.momentix.ui.activities.MainActivity
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.alarm.momentix.R
 import com.alarm.momentix.adapters.AlarmRcAdapter
 import com.alarm.momentix.databinding.FragmentMainBinding
+import com.alarm.momentix.ui.activities.MainActivity
 import com.alarm.momentix.utils.checkAboveKitkat
 import com.alarm.momentix.utils.getStatusBarHeight
 import com.alarm.momentix.utils.rateUs
@@ -29,6 +32,7 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var alarmRcAdapter: AlarmRcAdapter
 
+    var flag = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +46,8 @@ class MainFragment : Fragment() {
         }
 
 
-        (activity as MainActivity).commonViewModel.getAllLiveAlarm()
+        (activity as MainActivity).commonViewModel.getAllAlarm()
+        (activity as MainActivity).commonViewModel.alarmList
             .observe(viewLifecycleOwner, { alarmList ->
                 alarmRcAdapter.submitList(alarmList)
             })
@@ -53,10 +58,10 @@ class MainFragment : Fragment() {
         setSlidingBehaviour()
         setViews()
         setClickListeners()
-
+        setSwipeToDelete()
         return binding.root
-
     }
+
 
     private fun setClickListeners() {
 
@@ -90,7 +95,19 @@ class MainFragment : Fragment() {
         }
         binding.fragmentListalarmsRecylerView.apply {
             adapter = alarmRcAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    if (dy > 0) {
+                        binding.fragmentListalarmsAddAlarm.hide()
+                    } else {
+                        binding.fragmentListalarmsAddAlarm.show()
+                    }
+                }
+            })
         }
+
+
+
 
         alarmRcAdapter.setOnItemClickListener { alarm ->
             val bundle = Bundle().apply {
@@ -121,8 +138,10 @@ class MainFragment : Fragment() {
 
                     if (slideOffset < 0.5F) {
                         binding.tempView.alpha = 0.5F
+                        binding.fragmentListalarmsAddAlarm.show()
                     } else {
                         binding.tempView.alpha = (slideOffset)
+                        binding.fragmentListalarmsAddAlarm.hide()
                     }
                     bottomSheet.setPadding(
                         0,
@@ -162,6 +181,138 @@ class MainFragment : Fragment() {
                 return false
             }
         }
+    }
+
+
+    private fun setSwipeToDelete() {
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT
+
+        ) {
+
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val mAlarm = alarmRcAdapter.currentList[position]
+
+
+
+                alarmRcAdapter.notifyItemRemoved(position)
+                alarmRcAdapter.notifyItemRangeChanged(position, alarmRcAdapter.currentList.size)
+                (activity as MainActivity).commonViewModel._alarmList.value?.removeAt(position)
+                (activity as MainActivity).commonViewModel.deleteAlarm(mAlarm.alarmId)
+                context?.let { mAlarm.cancelAlarm(it) }
+
+
+
+            }
+
+            private val deleteIcon =
+                ContextCompat.getDrawable(activity!!, R.drawable.ic_baseline_delete_forever_24)
+
+            private val intrinsicWidth = deleteIcon?.intrinsicWidth
+            private val intrinsicHeight = deleteIcon?.intrinsicHeight
+            private val background = ColorDrawable()
+            private val backgroundColor = Color.parseColor("#f44336")
+            private val clearPaint =
+                Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+
+                val itemView = viewHolder.itemView
+                val itemHeight = itemView.bottom - itemView.top
+                val isCanceled = dX == 0f && !isCurrentlyActive
+
+                if (isCanceled) {
+                    clearCanvas(
+                        c,
+                        itemView.right + dX,
+                        itemView.top.toFloat(),
+                        itemView.right.toFloat(),
+                        itemView.bottom.toFloat()
+                    )
+                    super.onChildDraw(
+                        c,
+                        recyclerView,
+                        viewHolder,
+                        dX,
+                        dY,
+                        actionState,
+                        isCurrentlyActive
+                    )
+                    return
+                }
+
+                // Draw the red delete background
+                background.color = backgroundColor
+                background.setBounds(
+                    itemView.right + dX.toInt(),
+                    itemView.top,
+                    itemView.right,
+                    itemView.bottom
+                )
+                background.draw(c)
+
+                // Calculate position of delete icon
+                val deleteIconTop = itemView.top + (itemHeight - intrinsicHeight!!) / 2
+                val deleteIconMargin = (itemHeight - intrinsicHeight!!) / 2
+                val deleteIconLeft = itemView.right - deleteIconMargin - intrinsicWidth!!
+                val deleteIconRight = itemView.right - deleteIconMargin
+                val deleteIconBottom = deleteIconTop + intrinsicHeight
+
+                // Draw the delete icon
+                deleteIcon?.setBounds(
+                    deleteIconLeft,
+                    deleteIconTop,
+                    deleteIconRight,
+                    deleteIconBottom
+                )
+                deleteIcon?.draw(c)
+
+                super.onChildDraw(
+                    c,
+                    recyclerView,
+                    viewHolder,
+                    dX,
+                    dY,
+                    actionState,
+                    isCurrentlyActive
+                )
+            }
+
+            private fun clearCanvas(
+                c: Canvas?,
+                left: Float,
+                top: Float,
+                right: Float,
+                bottom: Float
+            ) {
+                c?.drawRect(left, top, right, bottom, clearPaint)
+            }
+
+        }
+
+        ItemTouchHelper(itemTouchHelperCallback).apply {
+            attachToRecyclerView(binding.fragmentListalarmsRecylerView)
+        }
+
     }
 
 

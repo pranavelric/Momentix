@@ -18,7 +18,7 @@ class AlarmRepository
     suspend fun update(alarm: Alarm) {
         dao.updateAlarm(alarm)
     }
-    
+
     fun getAllLiveAlarm() = dao.getLiveAlarms()
 
     suspend fun deleteAlarm(alarmId: Int) {
@@ -27,6 +27,10 @@ class AlarmRepository
 
     suspend fun deleteAll() {
         dao.deleteAll()
+    }
+
+    suspend fun getAllAlarm(): List<Alarm> {
+        return dao.getAllAlarms()
     }
 
 

@@ -17,12 +17,17 @@ import javax.inject.Inject
 class CommonViewModel @ViewModelInject constructor(private val repository: AlarmRepository) :
     ViewModel() {
 
+    val _alarmList = MutableLiveData<MutableList<Alarm>>()
+    val alarmList: LiveData<MutableList<Alarm>> = _alarmList
 
 
     fun getAllLiveAlarm(): LiveData<List<Alarm>> {
         return repository.getAllLiveAlarm()
     }
 
+    fun getAllAlarm() = viewModelScope.launch {
+        _alarmList.postValue(repository.getAllAlarm().toMutableList())
+    }
 
     fun update(alarm: Alarm) = viewModelScope.launch {
         repository.update(alarm)

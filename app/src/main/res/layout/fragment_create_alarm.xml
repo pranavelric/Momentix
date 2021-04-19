@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,263 +7,405 @@
     android:layout_height="match_parent"
     tools:context=".ui.createAlarm.CreateAlarmFragment">
 
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:fitsSystemWindows="true"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_height="match_parent"
+        android:background="@color/primary_color">
 
-        >
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="Create alarm" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:id="@+id/fragment_createalarm_timePickerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/appbar">
-
-        <TimePicker
-            android:id="@+id/fragment_createalarm_timePicker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:timePickerMode="spinner" />
-    </LinearLayout>
-
-
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/fragment_createalarm_title"
-        android:layout_width="match_parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_timePickerLayout"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:layout_margin="@dimen/_10sdp"
-        app:counterMaxLength="30"
-        app:counterEnabled="true"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/alarm_title"
-            android:maxLines="1"
-            android:minLines="1"
-            android:lines="1"
-            android:inputType="text"
-            android:imeOptions= "actionDone"
-            android:maxLength="30"
-            android:background="@android:color/transparent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Alarm Title"/>
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <CheckBox
-        android:layout_margin="@dimen/_10sdp"
-        android:id="@+id/fragment_createalarm_recurring"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:checked="false"
-        android:text="Recurring Alarm"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_title" />
-
-    <HorizontalScrollView
-        android:id="@+id/fragment_createalarm_recurring_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        android:layout_margin="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_recurring">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <ToggleButton
-                android:id="@+id/fragment_createalarm_checkMon"
-                style="@style/toggleButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="3dp"
-                android:background="@drawable/toggle_bg"
-                android:textOff="Mon"
-                android:textOn="Mon" />
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/primary_color"
+                app:contentScrim="@color/primary_color"
+                app:layout_collapseMode="parallax"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ToggleButton
-                android:id="@+id/fragment_createalarm_checkTue"
-                style="@style/toggleButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="3dp"
-                android:background="@drawable/toggle_bg"
-                android:textOff="Tue"
-                android:textOn="Tue" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/primary_color"
+                    app:layout_collapseMode="parallax">
 
-            <ToggleButton
-                android:id="@+id/fragment_createalarm_checkWed"
-                style="@style/toggleButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="3dp"
-                android:background="@drawable/toggle_bg"
-                android:textOff="Wed"
-                android:textOn="Wed" />
+                    <ImageButton
+                        android:id="@+id/details_back_btn"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="?attr/actionBarSize"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_baseline_arrow_back_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-            <ToggleButton
-                android:id="@+id/fragment_createalarm_checkThu"
-                style="@style/toggleButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="3dp"
-                android:background="@drawable/toggle_bg"
-                android:textOff="Thu"
-                android:textOn="Thu" />
 
-            <ToggleButton
-                android:id="@+id/fragment_createalarm_checkFri"
-                style="@style/toggleButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="3dp"
-                android:background="@drawable/toggle_bg"
-                android:textOff="Fri"
-                android:textOn="Fri" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/expandedImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:alpha="0.8"
+                        android:background="@color/primary_color"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/temp2"
+                        app:layout_collapseParallaxMultiplier="0.7"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:shapeAppearanceOverlay="@style/roundedImageView"
+                        tools:src="@drawable/temp2" />
 
-            <ToggleButton
-                android:id="@+id/fragment_createalarm_checkSat"
-                style="@style/toggleButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="3dp"
-                android:background="@drawable/toggle_bg"
-                android:textOff="Sat"
-                android:textOn="Sat" />
 
-            <ToggleButton
-                android:id="@+id/fragment_createalarm_checkSun"
-                style="@style/toggleButton"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_margin="3dp"
-                android:background="@drawable/toggle_bg"
-                android:textOff="Sun"
-                android:textOn="Sun" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="#6A090412"
+                        android:scaleType="centerCrop"
+                        app:layout_collapseParallaxMultiplier="0.7"
+                        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:translationY="-40dp"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/time_picker_button"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_110sdp"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        android:text="14:25 PM"
+                        android:textSize="@dimen/_17sdp"
+                        app:cornerRadius="@dimen/_10sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:rippleColor="@color/secondary_amoled" />
+
+
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/item_alarm_started"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_16sdp"
+                        android:checked="false"
+                        android:thumb="@drawable/switch_thum"
+                        android:track="@drawable/switch_track_custom"
+                        app:layout_constraintBottom_toBottomOf="@id/time_picker_button"
+                        app:layout_constraintTop_toTopOf="@id/time_picker_button"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:track="@drawable/switch_track_custom" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_createalarm_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:background="@android:color/transparent"
+                    android:textColorHint="@color/text_color"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="30"
+               >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/alarm_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:hint="Alarm Title"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:lines="1"
+                        android:maxLength="30"
+                        android:maxLines="1"
+                        android:textColor="@color/text_color"
+                        android:minLines="1"
+                        android:textSize="@dimen/_12sdp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                <CheckBox
+                    android:id="@+id/fragment_createalarm_recurring"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:button="@drawable/repeat_checkbox_selector"
+                    android:buttonTint="@color/colorOnPrimary_amoled"
+                    android:checked="false"
+                    android:padding="@dimen/_10sdp"
+                    android:text="Repeat Alarm"
+                    android:textColor="@color/text_color"
+                    android:textSize="@dimen/_16sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_title" />
+
+                <HorizontalScrollView
+                    android:id="@+id/fragment_createalarm_recurring_options"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_recurring">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <ToggleButton
+                            android:id="@+id/fragment_createalarm_checkMon"
+                            style="@style/toggleButton"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/toggle_bg"
+                            android:textOff="Mon"
+                            android:textOn="Mon" />
+
+                        <ToggleButton
+                            android:id="@+id/fragment_createalarm_checkTue"
+                            style="@style/toggleButton"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/toggle_bg"
+                            android:textOff="Tue"
+                            android:textOn="Tue" />
+
+                        <ToggleButton
+                            android:id="@+id/fragment_createalarm_checkWed"
+                            style="@style/toggleButton"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/toggle_bg"
+                            android:textOff="Wed"
+                            android:textOn="Wed" />
+
+                        <ToggleButton
+                            android:id="@+id/fragment_createalarm_checkThu"
+                            style="@style/toggleButton"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/toggle_bg"
+                            android:textOff="Thu"
+                            android:textOn="Thu" />
+
+                        <ToggleButton
+                            android:id="@+id/fragment_createalarm_checkFri"
+                            style="@style/toggleButton"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/toggle_bg"
+                            android:textOff="Fri"
+                            android:textOn="Fri" />
+
+                        <ToggleButton
+                            android:id="@+id/fragment_createalarm_checkSat"
+                            style="@style/toggleButton"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/toggle_bg"
+                            android:textOff="Sat"
+                            android:textOn="Sat" />
+
+                        <ToggleButton
+                            android:id="@+id/fragment_createalarm_checkSun"
+                            style="@style/toggleButton"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/toggle_bg"
+                            android:textOff="Sun"
+                            android:textOn="Sun" />
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_createalarm_card_sound"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_recurring_options">
+
+                    <TextView
+
+                        android:id="@+id/fragment_createalarm_setTone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="Ringtone"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:layout_editor_absoluteX="0dp" />
+
+                    <TextView
+                        android:id="@+id/fragment_createalarm_setToneName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:text="Alarm Sound"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textColor="@color/text_color"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/fragment_createalarm_setTone" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    >
+                    <TextView
+                        android:id="@+id/fragment_createalarm_vibrateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/_10sdp"
+                        android:text="Vibrate"
+                        android:textAlignment="textStart"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:textSize="25sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_card_sound"
+                        android:layout_weight="1"
+                        />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/fragment_createalarm_vibrate_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="@dimen/_10sdp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_card_sound"
+                        android:thumb="@drawable/switch_thum"
+                        android:track="@drawable/switch_track_custom"
+                        app:track="@drawable/switch_track_custom"
+                        />
+
+                </LinearLayout>
+
+
+
+<!--                <TimePicker-->
+<!--                    android:id="@+id/fragment_createalarm_timePicker"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:timePickerMode="spinner"-->
+<!--                    android:layout_marginTop="@dimen/_20sdp"-->
+<!--                    />-->
+
+
+
+
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:id="@+id/fragment_createalarm_button_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_gravity="bottom"
+            >
+
+            <Button
+                android:id="@+id/fragment_createalarm_cancelAlarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:text="Back"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/fragment_createalarm_scheduleAlarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_marginBottom="@dimen/_1sdp"
+                android:layout_weight="1"
+                android:fontFamily="monospace"
+                android:text="Schedule Alarm"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+
+
+
+
+
+
         </LinearLayout>
-    </HorizontalScrollView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/fragment_createalarm_card_sound"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_recurring_options"
-
-        >
-
-        <TextView
-
-            android:id="@+id/fragment_createalarm_setTone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Alarm Sound"
-
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textSize="21sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp" />
-
-        <TextView
-            android:id="@+id/fragment_createalarm_setToneName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-android:layout_margin="@dimen/_10sdp"
-            android:text="Alarm Sound"
-
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textSize="13sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_createalarm_setTone"
- />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <TextView
-        android:id="@+id/fragment_createalarm_vibrateText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_10sdp"
-        android:text="Vibrate"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textSize="21sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_card_sound" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/fragment_createalarm_vibrate_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/_10sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_card_sound"
-        />
-
-    <LinearLayout
-        android:id="@+id/fragment_createalarm_button_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
-
-        <Button
-            android:id="@+id/fragment_createalarm_cancelAlarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_1sdp"
-            android:layout_weight="1"
-            android:fontFamily="monospace"
-            android:text="Cancel Alarm"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/fragment_createalarm_scheduleAlarm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:layout_marginBottom="@dimen/_1sdp"
-            android:layout_weight="1"
-            android:fontFamily="monospace"
-            android:text="Schedule Alarm"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
-
-
-    </LinearLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
