@@ -18,12 +18,13 @@
         android:id="@+id/alarm_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp"
-        app:cardCornerRadius="@dimen/_6sdp"
+        android:layout_margin="@dimen/_1sdp"
+        app:cardCornerRadius="@dimen/_2sdp"
         app:cardElevation="@dimen/_6sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/primary_color"
         >
 
 
@@ -36,7 +37,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:padding="0dp"
                 android:text="X"
                 android:textSize="@dimen/_8sdp"
@@ -46,6 +47,7 @@
                 android:insetRight="0dp"
                 app:backgroundTint="@android:color/holo_red_dark"
                 android:id="@+id/item_alarm_recurring_delete"
+                android:visibility="gone"
                 />
 
 
@@ -73,6 +75,7 @@
 
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_4sdp"
@@ -92,8 +95,7 @@
                     android:textColor="@{myAlarm.monday? @color/black:@color/gray}"
                     android:textOff="MON"
                     android:textOn="MON"
-                    android:textSize="10sp"
- />
+                    android:textSize="10sp" />
 
                 <ToggleButton
                     android:id="@+id/item_checkTue"
@@ -104,8 +106,7 @@
                     android:textColor="@{myAlarm.tuesday?@color/black:@color/gray}"
                     android:textOff="TUE"
                     android:textOn="TUE"
-                    android:textSize="10sp"
- />
+                    android:textSize="10sp" />
 
                 <ToggleButton
                     android:id="@+id/item_checkWed"
@@ -116,8 +117,7 @@
                     android:textColor="@{myAlarm.wednesday?@color/black:@color/gray}"
                     android:textOff="WED"
                     android:textOn="WED"
-                    android:textSize="10sp"
-     />
+                    android:textSize="10sp" />
 
                 <ToggleButton
                     android:id="@+id/item_checkThu"
@@ -128,8 +128,7 @@
                     android:textColor="@{myAlarm.thursday?@color/black:@color/gray}"
                     android:textOff="THU"
                     android:textOn="THU"
-                    android:textSize="10sp"
- />
+                    android:textSize="10sp" />
 
                 <ToggleButton
                     android:id="@+id/item_checkFri"
@@ -140,8 +139,7 @@
                     android:textColor="@{myAlarm.friday?@color/black:@android:color/darker_gray}"
                     android:textOff="FRI"
                     android:textOn="FRI"
-                    android:textSize="10sp"
-        />
+                    android:textSize="10sp" />
 
                 <ToggleButton
                     android:id="@+id/item_checkSat"
@@ -152,8 +150,7 @@
                     android:textColor="@{myAlarm.saturday?@color/black:@color/gray}"
                     android:textOff="SAT"
                     android:textOn="SAT"
-                    android:textSize="10sp"
-/>
+                    android:textSize="10sp" />
 
                 <ToggleButton
                     android:id="@+id/item_checkSun"
@@ -186,6 +183,17 @@
                 app:track="@drawable/switch_track_custom"
  android:thumb="@drawable/switch_thum"
                 />
+
+
+<!--            <ImageView-->
+<!--                android:id="@+id/item_alarm_recurring"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="2dp"-->
+<!--                android:src="@drawable/ic_baseline_repeat_24"-->
+<!--                android:visibility="@{myAlarm.recurring? View.VISIBLE:View.GONE}"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent" />-->
 
 
 
