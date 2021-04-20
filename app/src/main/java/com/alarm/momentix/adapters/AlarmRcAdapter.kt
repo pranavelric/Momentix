@@ -23,6 +23,7 @@ class AlarmRcAdapter() :
             binding.setVariable(BR.myAlarm, alarm)
             binding.executePendingBindings()
             binding.itemAlarmTime.text = TimePickerUtil.getFormattedTime(alarm.hour, alarm.minute)
+
             binding.itemAlarmStarted.setOnCheckedChangeListener { buttonView, isChecked ->
                 onAlarmCancelClickListener?.let { click ->
                     click(alarm, isChecked)

@@ -15,6 +15,8 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
     override fun onStart() {
         super.onStart()
         activity?.setFullScreen()
+
+
         CoroutinesHelper.delayWithMain(2000L) {
             if (findNavController().currentDestination?.id == R.id.splashFragment)
                 findNavController().navigate(R.id.action_splashFragment_to_mainFragment)

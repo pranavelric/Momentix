@@ -3,19 +3,23 @@ package com.alarm.momentix.ui.activities
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
+import com.alarm.momentix.R
 import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.databinding.ActivityRingBinding
 import com.alarm.momentix.services.AlarmService
 import com.alarm.momentix.ui.main.MainFragViewModel
 import com.alarm.momentix.utils.Constants
+import com.alarm.momentix.utils.TimePickerUtil
 import dagger.hilt.android.AndroidEntryPoint
+import me.jfenn.slideactionview.SlideActionListener
 import java.util.*
 
 
@@ -48,16 +52,51 @@ class RingActivity : AppCompatActivity() {
                 alarm = (bundle.getSerializable(Constants.ALARM_OBJ) as? Alarm)!!
         }
 
-        binding.activityRingDismiss.setOnClickListener {
-            dismissAlarm()
-        }
-        binding.activityRingSnooze.setOnClickListener {
-            snoozeAlarm()
-        }
 
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
+
+        binding.actionView.setLeftIcon(
+            AppCompatResources.getDrawable(
+                this,
+                R.drawable.ic_baseline_alarm_off_24
+            )
+        )
+
+        binding.actionView.setRightIcon(
+            AppCompatResources.getDrawable(
+                this,
+                R.drawable.ic_baseline_snooze_24
+            )
+        )
+
+        binding.title.text = alarm?.title
+
+        binding.actionView.setListener(object : SlideActionListener {
+            override fun onSlideLeft() {
+                dismissAlarm()
+            }
+
+            override fun onSlideRight() {
+                snoozeAlarm()
+            }
+        })
+
+
+        binding.date.text = TimePickerUtil.getCurrentFormattedDate()
         animateClock()
-
     }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        window.addFlags(
+            WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                    or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                    or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                    or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                    or WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+    }
+
 
     private fun animateClock() {
         val rotateAnimation =
@@ -127,12 +166,11 @@ class RingActivity : AppCompatActivity() {
     private fun dismissAlarm() {
 
         if (alarm != null) {
-            if(!alarm!!.recurring)
-            alarm!!.started = false
+            if (!alarm!!.recurring)
+                alarm!!.started = false
 
             alarm!!.cancelAlarm(baseContext)
 
-            Log.d("RRR", "dismissAlarm: ")
             mainFragViewModel.update(alarm!!)
         }
         val intentService = Intent(applicationContext, AlarmService::class.java)
