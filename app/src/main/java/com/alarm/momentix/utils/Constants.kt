@@ -18,5 +18,8 @@ object Constants {
     const val STOP_SERVICE = "STOP_SERIVE"
     const val SNOOZE_SERVICE = "SNOOZE_SERVICE"
 
+    const val BACKGROUND_IMAGE = "BACKGROUND_IMAGE"
+    const val NOT_FOUND = "NOTFOUND"
 
+    const val PERMISSION_CODE = 12345
 }

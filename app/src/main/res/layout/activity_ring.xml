@@ -43,7 +43,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView"
                 app:srcCompat="@drawable/ic_baseline_access_alarm_24"
-                app:tint="@color/primary_color" />
+                app:tint="@color/black" />
 
             <TextView
                 android:id="@+id/date"

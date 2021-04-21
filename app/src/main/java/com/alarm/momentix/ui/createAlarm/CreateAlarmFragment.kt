@@ -16,6 +16,7 @@ import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.databinding.FragmentCreateAlarmBinding
 import com.alarm.momentix.ui.activities.MainActivity
 import com.alarm.momentix.utils.TimePickerUtil
+import com.alarm.momentix.utils.getBackgroundImage
 import com.alarm.momentix.utils.gone
 import com.alarm.momentix.utils.visible
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -206,6 +207,9 @@ class CreateAlarmFragment : Fragment() {
     }
 
     private fun setData() {
+
+        binding.expandedImage.getBackgroundImage(Uri.parse((activity as MainActivity).mySharedPrefrences.getBrackgroundImage()))
+
 
         binding.fragmentCreatealarmSetToneName.text = ringtone.getTitle(context)
 

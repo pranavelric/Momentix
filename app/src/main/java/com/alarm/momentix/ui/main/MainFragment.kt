@@ -2,11 +2,13 @@ package com.alarm.momentix.ui.main
 
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,10 +18,7 @@ import com.alarm.momentix.R
 import com.alarm.momentix.adapters.AlarmRcAdapter
 import com.alarm.momentix.databinding.FragmentMainBinding
 import com.alarm.momentix.ui.activities.MainActivity
-import com.alarm.momentix.utils.checkAboveKitkat
-import com.alarm.momentix.utils.getStatusBarHeight
-import com.alarm.momentix.utils.rateUs
-import com.alarm.momentix.utils.share
+import com.alarm.momentix.utils.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -87,6 +86,9 @@ class MainFragment : Fragment() {
 
 
     private fun setViews() {
+
+
+        binding.background.getBackgroundImage(Uri.parse((activity as MainActivity).mySharedPrefrences.getBrackgroundImage()))
 
 
         binding.fragmentListalarmsAddAlarm.setOnClickListener {
@@ -163,13 +165,7 @@ class MainFragment : Fragment() {
                 return true
             }
             R.id.action_rate -> {
-//                if (!(activity as MainActivity).mySharedPrefrences.getIsNightModeEnabled()) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//                    (activity as MainActivity).mySharedPrefrences.setNightModeEnabled(true)
-//                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//                    (activity as MainActivity).mySharedPrefrences.setNightModeEnabled(false)
-//                }
+         
                 activity?.rateUs()
                 return true
             }
@@ -315,6 +311,14 @@ class MainFragment : Fragment() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+
+            (activity as MainActivity).setFullScreenWithBtmNav()
+            (activity as MainActivity).setFullScreenForNotch()
+
+
+    }
 
 }
 

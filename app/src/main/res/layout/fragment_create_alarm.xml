@@ -122,9 +122,10 @@
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_22sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
+
                     android:textColorHint="@color/text_color"
                     app:boxStrokeColor="@color/text_color"
-                    app:boxBackgroundColor="@color/primary_color_light"
+                    app:boxBackgroundColor="@color/primary_color_transparent"
                     app:boxCornerRadiusBottomEnd="@dimen/_8sdp"
                     app:boxCornerRadiusTopEnd="@dimen/_8sdp"
                     app:boxStrokeWidthFocused="@dimen/_4sdp"
@@ -157,15 +158,15 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_10sdp"
                     android:button="@drawable/repeat_checkbox_selector"
-                    android:buttonTint="@color/colorOnPrimary_amoled"
+                    android:buttonTint="@color/helper_icon_color"
                     android:checked="false"
                     android:padding="@dimen/_10sdp"
                     android:text="Repeat Alarm"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/_16sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fragment_createalarm_title"
-
                     />
 
                 <HorizontalScrollView
@@ -272,6 +273,7 @@
                         android:layout_margin="10dp"
                         android:text="Ringtone"
                         android:textAlignment="center"
+                        android:textColor="@color/text_color"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textSize="25sp"
                         android:textStyle="bold"
@@ -306,6 +308,7 @@
                         android:layout_margin="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:text="Vibrate"
+                        android:textColor="@color/text_color"
                         android:textAlignment="textStart"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textSize="25sp"
@@ -328,13 +331,6 @@
                 </LinearLayout>
 
 
-                <!--                <TimePicker-->
-                <!--                    android:id="@+id/fragment_createalarm_timePicker"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:timePickerMode="spinner"-->
-                <!--                    android:layout_marginTop="@dimen/_20sdp"-->
-                <!--                    />-->
 
 
             </LinearLayout>
@@ -364,7 +360,7 @@
                 android:text="Back"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                app:backgroundTint="@color/red"
+                app:backgroundTint="@color/gray"
 
                 />
 
@@ -381,9 +377,9 @@
 
                 android:fontFamily="monospace"
                 android:text="Schedule Alarm"
-                android:textColor="@color/white"
+                android:textColor="@color/text_color"
                 android:textStyle="bold"
-                app:backgroundTint="@color/green"
+                app:backgroundTint="@color/secondary_amoled"
 
                 />
 

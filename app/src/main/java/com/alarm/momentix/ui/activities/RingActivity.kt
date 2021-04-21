@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
@@ -16,10 +17,13 @@ import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.databinding.ActivityRingBinding
 import com.alarm.momentix.services.AlarmService
 import com.alarm.momentix.utils.Constants
+import com.alarm.momentix.utils.MySharedPrefrences
 import com.alarm.momentix.utils.TimePickerUtil
+import com.alarm.momentix.utils.getBackgroundImage
 import dagger.hilt.android.AndroidEntryPoint
 import me.jfenn.slideactionview.SlideActionListener
 import java.util.*
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
@@ -29,6 +33,10 @@ class RingActivity : AppCompatActivity() {
     private val commonViewModel: CommonViewModel by lazy {
         ViewModelProvider(this).get(CommonViewModel::class.java)
     }
+
+
+    @Inject
+    lateinit var mySharedPrefrences: MySharedPrefrences
 
     private lateinit var binding: ActivityRingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +53,12 @@ class RingActivity : AppCompatActivity() {
                         or WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON
             )
         }
+
+
+        binding.background.getBackgroundImage(Uri.parse(mySharedPrefrences.getBrackgroundImage()))
+
+
+
         val bundle = intent.getBundleExtra(Constants.BUNDLE_ALARM_OBJ)
         if (bundle != null) {
             if (bundle.getSerializable(Constants.ALARM_OBJ) != null)

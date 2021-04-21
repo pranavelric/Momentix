@@ -28,7 +28,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Momentix">
+        android:theme="@style/Theme.Momentix"
+        android:requestLegacyExternalStorage="true"
+        >
         <activity
             android:name=".ui.activities.RingActivity"
             android:launchMode="singleTask"

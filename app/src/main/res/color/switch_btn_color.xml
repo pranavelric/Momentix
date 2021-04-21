@@ -4,7 +4,7 @@
 
 
     <item android:state_checked="true"
-        android:color="@color/switchTrackActive" />
-    <item  android:state_checked="false" android:color="@color/gray" />
+        android:color="@color/switch_checked" />
+    <item  android:state_checked="false" android:color="@color/switch_unchecked" />
 
 </selector>

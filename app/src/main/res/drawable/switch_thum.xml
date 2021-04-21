@@ -3,7 +3,7 @@
     <item android:left="2dp" android:top="2dp" android:right="2dp" android:bottom="2dp">
         <shape
             android:shape="oval"
-            android:tint="@color/switch_color"
+            android:tint="@color/switch_btn_color"
             >
             <size android:width="25dp" android:height="25dp" />
             <solid android:color="@color/fab_color" />
