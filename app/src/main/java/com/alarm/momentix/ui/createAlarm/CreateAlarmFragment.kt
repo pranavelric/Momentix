@@ -211,6 +211,7 @@ class CreateAlarmFragment : Fragment() {
         binding.expandedImage.getBackgroundImage(Uri.parse((activity as MainActivity).mySharedPrefrences.getBrackgroundImage()))
 
 
+
         binding.fragmentCreatealarmSetToneName.text = ringtone.getTitle(context)
 
         binding.timePickerButton.setText(

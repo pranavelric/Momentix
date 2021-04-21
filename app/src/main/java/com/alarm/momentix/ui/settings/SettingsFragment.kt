@@ -19,9 +19,6 @@ import com.alarm.momentix.utils.getBackgroundImage
 class SettingsFragment : Fragment() {
 
 
-    private val viewModel: SettingsViewModel by lazy {
-        ViewModelProvider(this).get(SettingsViewModel::class.java)
-    }
     private lateinit var binding: SettingsFragmentBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +34,13 @@ class SettingsFragment : Fragment() {
 
     private fun setData() {
         binding.expandedImage.getBackgroundImage(Uri.parse((activity as MainActivity).mySharedPrefrences.getBrackgroundImage()))
+
+
+
+        binding.nightmodeSwitch.isChecked =
+            (activity as MainActivity).mySharedPrefrences.getIsNightModeEnabled()
+
+
     }
 
     private fun setClickListeners() {

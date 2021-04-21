@@ -5,6 +5,8 @@ import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
+import com.alarm.momentix.R
 import com.bumptech.glide.Glide
 import java.io.File
 
@@ -28,9 +30,20 @@ fun ImageView.getBackgroundImage(backgroundUrl: Uri?) {
         }
 
 
+        if(filePath!=null){
         this.context?.let {
             Glide.with(it)
                 .load(File(filePath)).into(this)
+        }
+        }
+        else{
+            this.context?.let {
+                Glide.with(it)
+                    .load(  AppCompatResources.getDrawable(
+                        it,
+                        R.drawable.temp2
+                    )).into(this)
+            }
         }
 
 
