@@ -16,19 +16,30 @@ import android.os.Vibrator
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.alarm.momentix.R
+import com.alarm.momentix.data.local.AlarmRepository
 import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.ui.activities.RingActivity
 import com.alarm.momentix.utils.Constants
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AlarmService : Service() {
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var vibrator: Vibrator
     private lateinit var ringtone: Uri
     private var alarm: Alarm? = null
 
-    private lateinit var config:VolumeShaper.Configuration
+    private lateinit var config: VolumeShaper.Configuration
     private lateinit var volumeShaper: VolumeShaper
+
+    @Inject
+    lateinit var repository: AlarmRepository
+
 
     override fun onBind(intent: Intent): IBinder? {
         return null
@@ -38,15 +49,18 @@ class AlarmService : Service() {
         super.onCreate()
         mediaPlayer = MediaPlayer()
         mediaPlayer.isLooping = true
-        mediaPlayer.setVolume(100f,100f)
+        mediaPlayer.setVolume(100f, 100f)
         mediaPlayer.setAudioAttributes(
             AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_ALARM).build()
         )
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
-             config = VolumeShaper.Configuration.Builder()
+            config = VolumeShaper.Configuration.Builder()
                 .setDuration(10000)
-                .setCurve(floatArrayOf(0f,0.2f,0.3f,0.5f,1f), floatArrayOf(0f,0.2f,0.3f,0.5f ,1f))
+                .setCurve(
+                    floatArrayOf(0f, 0.2f, 0.3f, 0.5f, 1f),
+                    floatArrayOf(0f, 0.2f, 0.3f, 0.5f, 1f)
+                )
                 .setInterpolatorType(VolumeShaper.Configuration.INTERPOLATOR_TYPE_LINEAR)
                 .build()
 
@@ -63,26 +77,39 @@ class AlarmService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
 
-        when (intent?.action) {
-            Constants.STOP_SERVICE -> {
 
-                stopForeground(false)
-                stopSelf()
+        val bundle = intent?.getBundleExtra(Constants.BUNDLE_ALARM_OBJ)
+        if (bundle != null) {
+            alarm = bundle.getSerializable(Constants.ALARM_OBJ) as Alarm
+
+        }
+
+        when (intent?.action) {
+
+
+                    Constants.STOP_SERVICE -> {
+
+
+
+                alarm?.cancelAlarm(this.baseContext)
+                CoroutineScope(Dispatchers.Main).launch {
+                    alarm?.let {
+                        repository.update(
+                            it
+                        )
+                    }
+                }
+                        stopForeground(false)
+                        stopSelf()
+
 
             }
             Constants.SNOOZE_SERVICE -> {
-
                 snoozeAlarm()
-
-
             }
             else -> {
 
-                val bundle = intent?.getBundleExtra(Constants.BUNDLE_ALARM_OBJ)
-                if (bundle != null) {
-                    alarm = bundle.getSerializable(Constants.ALARM_OBJ) as Alarm
 
-                }
                 val notificationIntent = Intent(this, RingActivity::class.java).apply {
 
                     putExtra(Constants.BUNDLE_ALARM_OBJ, bundle)
@@ -147,10 +174,10 @@ class AlarmService : Service() {
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                     .setPriority(NotificationCompat.PRIORITY_MAX)
                     .setFullScreenIntent(pendingIntent, true)
-//                    .addAction(R.drawable.ic_baseline_delete_forever_24, "Dismiss", pStopIntent)
-//                    .addAction(R.drawable.ic_baseline_repeat_24, "Snooze", pSnoozeIntent)
+                    .addAction(R.drawable.ic_baseline_delete_forever_24, "Dismiss", pStopIntent)
+                    .addAction(R.drawable.ic_baseline_repeat_24, "Snooze", pSnoozeIntent)
                     .build()
-                mediaPlayer.setOnPreparedListener {
+                    mediaPlayer.setOnPreparedListener {
                     it.start()
 
                     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
@@ -170,8 +197,6 @@ class AlarmService : Service() {
 
                 }
                 startForeground(1, notification)
-
-
             }
 
         }

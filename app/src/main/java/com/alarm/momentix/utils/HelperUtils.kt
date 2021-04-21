@@ -15,6 +15,10 @@ fun checkAboveKitkat(): Boolean {
     return Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT
 }
 
+fun checkAboveLollipop(): Boolean {
+    return   Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP
+}
+
 fun Context.rateUs() {
 
     try {

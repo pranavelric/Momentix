@@ -9,10 +9,21 @@
     <color name="gray">#9E9E9E</color>
 
     <color name="white">#FFFFFFFF</color>
-    <color name="primary_color">#040b14</color>
     <color name="green">#44BD49</color>
     <color name="red">#EA3430</color>
+
+
+    <color name="primary_color">#E2F2F4</color>
+    <color name="primary_color_transparent">#9EE2F2F4</color>
+    <color name="dark_primary_color">#040b14</color>
     <color name="primary_color_light">#081629</color>
+
+    <color name="fab_color">#EAC16F</color>
+    <color name="fab_text_color">#EAC16F</color>
+
+    <color name="switch_checked">#EAC16F</color>
+    <color name="switch_unchecked">#888888</color>
+
 
 
 
@@ -25,6 +36,7 @@
     <color name="secondary_amoled">#F8D01F</color>
     <color name="colorSecondaryVariant_amoled">#AA8F16</color>
     <color name="colorOnSecondary_amoled">#000000</color>
+
     <color name="switchTrack">#F8D01F</color>
     <color name="switchTrackDisable">#FF3700B3</color>
     <color name="switchTrackActive">#AA8F16</color>

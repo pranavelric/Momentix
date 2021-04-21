@@ -1,37 +1,37 @@
 package com.alarm.momentix.broadCastReceiver
 
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import androidx.core.app.NotificationCompat
-import com.alarm.momentix.R
 import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.services.AlarmService
 import com.alarm.momentix.services.RescheduleAlarmService
-import com.alarm.momentix.ui.activities.RingActivity
 import com.alarm.momentix.utils.Constants
 import com.alarm.momentix.utils.Constants.ALARM_OBJ
 import com.alarm.momentix.utils.Constants.BUNDLE_ALARM_OBJ
 import com.alarm.momentix.utils.toast
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
+
 
 class AlarmBroadCastReceiver : BroadcastReceiver() {
 
 
+
     override fun onReceive(context: Context?, intent: Intent?) {
 
-        Log.d("RRR", "onReceive: ${intent?.action}")
+
         when (intent?.action) {
             Intent.ACTION_BOOT_COMPLETED -> {
                 startRescheduleAlarmService(context)
                 context?.toast("Alarm Reboot")
 
             }
+
             else -> {
                 val bundle = intent?.getBundleExtra(BUNDLE_ALARM_OBJ)
                 if (bundle != null) {
@@ -40,18 +40,11 @@ class AlarmBroadCastReceiver : BroadcastReceiver() {
 
                     if (alarm != null) {
                         if (!alarm.recurring) {
-
                             startAlarmService(context, alarm)
-
-
                         } else {
                             if (isAlarmToday(alarm)) {
-
-                                Log.d("RRR", "onReceive: ")
-
                                 startAlarmService(context, alarm)
                             }
-                            Log.d("RRR", " out onReceive: ")
                         }
                     }
 
@@ -112,6 +105,7 @@ class AlarmBroadCastReceiver : BroadcastReceiver() {
         }
 
     }
+
 
     private fun startAlarmService(context: Context?, alarm: Alarm) {
 

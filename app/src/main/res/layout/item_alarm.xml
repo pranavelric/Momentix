@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_1sdp"
         app:cardCornerRadius="@dimen/_2sdp"
-        app:cardElevation="@dimen/_6sdp"
+        app:cardElevation="@dimen/_1sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -198,12 +198,7 @@
 <!--                />-->
 
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_1sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:background="@color/white"
-                />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -14,6 +14,8 @@ import com.alarm.momentix.ui.activities.MainActivity
 import com.alarm.momentix.broadCastReceiver.AlarmBroadCastReceiver
 import com.alarm.momentix.utils.Constants.ALARM_OBJ
 import com.alarm.momentix.utils.Constants.BUNDLE_ALARM_OBJ
+import com.alarm.momentix.utils.TimePickerUtil
+import com.alarm.momentix.utils.checkAboveLollipop
 import com.alarm.momentix.utils.toast
 import java.io.Serializable
 import java.util.*
@@ -42,6 +44,9 @@ data class Alarm(
 
     fun schedule(context: Context) {
 
+
+
+
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmBroadCastReceiver::class.java)
         val bundle = Bundle().apply {
@@ -60,15 +65,24 @@ data class Alarm(
 
         // if alarm time is passed, increment day by 1
         if (calendar.timeInMillis <= System.currentTimeMillis()) {
-            Log.d("RRR", "scheduled for tomorrow ")
+
+            context.toast(
+                "Alarm scheduled for tomorrow at: ${
+                    TimePickerUtil.getFormattedTime(
+                        hour,
+                        minute
+                    )
+                }"
+            )
+
             calendar.set(Calendar.DAY_OF_MONTH, calendar.get(Calendar.DAY_OF_MONTH) + 1)
         }
 
         if (!recurring) {
 
-            context.toast("One time alarm set for ")
+            context.toast("One time alarm set for ${TimePickerUtil.getFormattedTime(hour, minute)}")
 
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            if (checkAboveLollipop()) {
 
 
                 alarmManager.setAlarmClock(
@@ -84,9 +98,6 @@ data class Alarm(
                 )
 
 
-
-
-
             } else {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
 
@@ -94,17 +105,22 @@ data class Alarm(
 
 
         } else {
-            context.toast("Recurring time alarm set for ${title} ${hour} ${minute}")
+            context.toast(
+                "Recurring time alarm set for ${
+                    TimePickerUtil.getFormattedTime(
+                        hour,
+                        minute
+                    )
+                }"
+            )
             val RUN_DAILY: Long = 24 * 60 * 60 * 1000
 
-            alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.timeInMillis,RUN_DAILY,pendingIntent)
-
-//            alarmManager.setRepeating(
-//                AlarmManager.RTC_WAKEUP,
-//                calendar.timeInMillis,
-//                RUN_DAILY,
-//                pendingIntent
-//            )
+            alarmManager.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                calendar.timeInMillis,
+                RUN_DAILY,
+                pendingIntent
+            )
 
         }
         this.started = true
@@ -112,12 +128,14 @@ data class Alarm(
 
     fun cancelAlarm(context: Context) {
 
+
+
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val intent = Intent(context, AlarmBroadCastReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(context, alarmId, intent, 0)
         alarmManager.cancel(pendingIntent)
         this.started = false
-        context.toast("Alarm cancelded for ${hour}::${minute}")
+        context.toast("Alarm cancelded for ${TimePickerUtil.getFormattedTime(hour, minute)}")
 
     }
 

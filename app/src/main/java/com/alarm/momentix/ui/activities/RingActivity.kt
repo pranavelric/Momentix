@@ -15,7 +15,6 @@ import com.alarm.momentix.R
 import com.alarm.momentix.data.model.Alarm
 import com.alarm.momentix.databinding.ActivityRingBinding
 import com.alarm.momentix.services.AlarmService
-import com.alarm.momentix.ui.main.MainFragViewModel
 import com.alarm.momentix.utils.Constants
 import com.alarm.momentix.utils.TimePickerUtil
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,8 +26,8 @@ import java.util.*
 class RingActivity : AppCompatActivity() {
 
     private var alarm: Alarm? = null
-    private val mainFragViewModel: MainFragViewModel by lazy {
-        ViewModelProvider(this).get(MainFragViewModel::class.java)
+    private val commonViewModel: CommonViewModel by lazy {
+        ViewModelProvider(this).get(CommonViewModel::class.java)
     }
 
     private lateinit var binding: ActivityRingBinding
@@ -171,7 +170,7 @@ class RingActivity : AppCompatActivity() {
 
             alarm!!.cancelAlarm(baseContext)
 
-            mainFragViewModel.update(alarm!!)
+            commonViewModel.update(alarm!!)
         }
         val intentService = Intent(applicationContext, AlarmService::class.java)
         applicationContext.stopService(intentService)

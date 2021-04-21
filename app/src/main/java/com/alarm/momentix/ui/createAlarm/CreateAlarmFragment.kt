@@ -6,6 +6,7 @@ import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -177,6 +178,7 @@ class CreateAlarmFragment : Fragment() {
     }
 
     private fun updateAlarm() {
+
 
         val alarmTitle: String = (binding.alarmTitle.text).toString()
         val updateAlarm = Alarm(
