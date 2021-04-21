@@ -8,10 +8,33 @@
     tools:context=".ui.splash.SplashFragment">
 
 
-    <com.cunoraz.gifview.library.GifView
+    <ImageView
+        android:id="@+id/splash_img"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_meeting_bg"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        app:gif="@drawable/yellow_clock" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/splash_img"
+        android:text="MOMENTIX"
+        android:textSize="26sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textStyle="bold"
+        />
+
+
+    <com.cunoraz.gifview.library.GifView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:gif="@drawable/set_loading"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="@dimen/_10sdp"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

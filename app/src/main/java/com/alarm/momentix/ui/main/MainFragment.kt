@@ -31,8 +31,6 @@ class MainFragment : Fragment() {
     @Inject
     lateinit var alarmRcAdapter: AlarmRcAdapter
 
-    var flag = true
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -49,7 +47,16 @@ class MainFragment : Fragment() {
         (activity as MainActivity).commonViewModel.alarmList
             .observe(viewLifecycleOwner, { alarmList ->
                 alarmRcAdapter.submitList(alarmList)
+
             })
+
+        (activity as MainActivity).commonViewModel.getAllLiveAlarm().observe(viewLifecycleOwner,{alarmList->
+            if (alarmList.isEmpty()) {
+                binding.emptyListBg.visible()
+            } else {
+                binding.emptyListBg.gone()
+            }
+        })
 
 
 
@@ -165,7 +172,7 @@ class MainFragment : Fragment() {
                 return true
             }
             R.id.action_rate -> {
-         
+
                 activity?.rateUs()
                 return true
             }
@@ -207,7 +214,6 @@ class MainFragment : Fragment() {
                 (activity as MainActivity).commonViewModel._alarmList.value?.removeAt(position)
                 (activity as MainActivity).commonViewModel.deleteAlarm(mAlarm.alarmId)
                 context?.let { mAlarm.cancelAlarm(it) }
-
 
 
             }
@@ -314,8 +320,8 @@ class MainFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-            (activity as MainActivity).setFullScreenWithBtmNav()
-            (activity as MainActivity).setFullScreenForNotch()
+        (activity as MainActivity).setFullScreenWithBtmNav()
+        (activity as MainActivity).setFullScreenForNotch()
 
 
     }

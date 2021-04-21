@@ -31,7 +31,6 @@ class CommonViewModel @ViewModelInject constructor(private val repository: Alarm
 
     fun update(alarm: Alarm) = viewModelScope.launch {
         repository.update(alarm)
-
     }
 
     fun deleteAll() = viewModelScope.launch {

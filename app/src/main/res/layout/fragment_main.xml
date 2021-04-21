@@ -93,6 +93,34 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <LinearLayout
+            android:id="@+id/empty_list_bg"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/primary_color"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbarLayout"
+
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_empty" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="You don't have any alarms set. Press the '+' button to create on"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/_16sdp" />
+
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

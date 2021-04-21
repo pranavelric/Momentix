@@ -2,7 +2,6 @@ package com.alarm.momentix.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.provider.MediaStore
 import com.alarm.momentix.R
 import com.alarm.momentix.utils.Constants.APP_THEME
 import com.alarm.momentix.utils.Constants.BACKGROUND_IMAGE
